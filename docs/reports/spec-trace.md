@@ -1,7 +1,7 @@
 # Tableau de bord specification <-> tests
 
 **Jalon :** MS-2  
-**Genere :** 2026-10-23T21:39:46+00:00
+**Genere :** 2026-10-23T21:44:25+00:00
 
 ## Synthese
 

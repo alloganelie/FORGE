@@ -106,6 +106,7 @@ Après un « validé » : `git commit`, puis `git tag ms-n`, puis passez au jalo
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
 | 2026-10-23 | MS-0 | ✔ | ✔ | — | — | — | — | — | — | — | ✔ | Validé avec réserve | ms-0 | Réserve E-01 (CI GitHub sur remote). Q-002 corrigée (82 tests verts). |
 | 2026-10-23 | MS-1 | ✔ | ✔ | ✔ | ✔ | — | — | — | — | — | ✔ | Validé | ms-1 | Réserve E-01 levée (code poussé sur GitHub, CI active). 119 tests verts, 4/4 CA. |
+| 2026-10-23 | MS-2 | ✔ | ✔ | ✔ | ✔ | — | ✔ | — | — | ✔ | ✔ | Validé | ms-2 | 160 tests verts, 35/35 CA cumulés, rejeu strict LLM, démo et refus OK. |
 
 Légende : ✔ bon · ✖ mauvais · — non applicable.
 

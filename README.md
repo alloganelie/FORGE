@@ -61,7 +61,7 @@ tools/
 |---|---|---|
 | MS-0 | Fondations (dépôt, CI, BDD, migrations, moteur d'états, traçabilité) | **Validé (tag ms-0)** |
 | MS-1 | Gouvernance (rôles, espaces de travail, lots de règles) | **Validé (tag ms-1)** |
-| MS-2 | Demande et faisabilité | **Terminé — en revue PO** |
+| MS-2 | Demande et faisabilité | **Validé (tag ms-2)** |
 | MS-3 | Sources et preuves | Non démarré |
 | MS-4 | Cartographie et contradictions | Non démarré |
 | MS-5 | Atomes et rendu | Non démarré |

@@ -1,8 +1,8 @@
 # PROGRESS — état d'avancement (mis à jour par l'agent après chaque tranche)
 
-**Jalon courant :** MS-2 — Demande et faisabilité (terminé, en revue Product Owner)
-**Dernière tranche terminée :** T20 — rapport et guide de démonstration MS-2
-**Prochaine tranche :** aucune ; **ne pas commencer MS-3** avant la revue PO.
+**Jalon courant :** MS-3 — Sources et preuves (prêt à démarrer)
+**Dernière tranche terminée :** MS-2 validé par le PO (tag ms-2)
+**Prochaine tranche :** MS-3, section 3 (voir `docs/milestones/MS-3.md`).
 
 ## Fait — MS-0 (fondations)
 
@@ -49,4 +49,4 @@
 
 ## Prochaine commande à lancer
 
-`make check` — puis suivre `docs/reports/MS-2-demo.md`.
+`make check` — puis démarrer MS-3 (voir `docs/milestones/MS-3.md`).
