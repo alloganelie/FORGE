@@ -1,7 +1,7 @@
 # PROGRESS — état d'avancement (mis à jour par l'agent après chaque tranche)
 
 **Jalon courant :** MS-0 — Fondations (terminé, en revue Product Owner)
-**Dernière tranche terminée :** T9 — rapport et guide de démonstration
+**Dernière tranche terminée :** T10 — correction Q-002 (reprise depuis le journal)
 **Prochaine tranche :** aucune ; **ne pas commencer MS-1** avant la revue PO.
 
 ## Fait (par tranche)
@@ -15,23 +15,24 @@
 7. **T7 — Traçabilité.** `tools/spec_trace.py`, portes ET-354/ET-356/ET-044, tableaux de bord HTML/MD/JSON, historique par jalon (ET-353 à ET-356, ET-372).
 8. **T8 — Image et exploitation.** Dockerfile multi-étapes non root, deux rôles, compose local, quatre environnements, SBOM en CI (ET-007, ET-009, ET-010) ; outil `verify-chain` et démonstration `demo-ledger`.
 9. **T9 — Documentation.** Rapport `docs/reports/MS-0-rapport.md` et guide `docs/reports/MS-0-demo.md` ; ADR-001 à ADR-009.
+10. **T10 — Correction Q-002.** `resume_target()` lit désormais `suspended_from` dans l'événement TR-R-19 du journal ; 5 tests ajoutés (unitaires et PostgreSQL). Aucun test existant modifié.
 
 ## Résultat
 
-- `make check` : **vert** (format, mypy strict, dépendances, génération, 77 tests, traçabilité).
+- `make check` : **vert** (format, mypy strict, dépendances, génération, 82 tests, traçabilité).
 - TST-18 : **vert** ; 54/54 transitions couvertes ; 0 test orphelin ; 0 identifiant inconnu.
 - Tableau de bord : `docs/reports/spec-trace.html`.
 
 ## Décisions prises
 
 - Q-001 : FORGE réservé au frontend et à l'infrastructure, absent des livrables et messages.
-- Q-002 : reprise vers l'état d'origine, y compris Reçue et Vérification de faisabilité (hypothèse).
+- Q-002 : reprise vers l'état enregistré au moment de la suspension, lu dans `suspended_from` de l'événement TR-R-19 du journal (décision PO).
 - Q-003 : portes de traçabilité appliquées au périmètre cumulé des jalons ; ET-355 bloquante au jalon final (hypothèse).
 - ADR-001 à ADR-009 dans `docs/adr/`.
 
 ## Questions en attente pour le Product Owner
 
-- Q-002 et Q-003 dans `docs/reports/QUESTIONS.md`.
+- Q-002 est tranchée et corrigée ; Q-003 est tranchée. Voir `docs/reports/QUESTIONS.md`.
 
 ## Prochaine commande à lancer
 

@@ -156,6 +156,31 @@ def append_event(
     )
 
 
+def latest_suspension_event(connection: Connection, request_id: UUID) -> dict[str, Any] | None:
+    """Dernier evenement TR-R-19 d'une demande (Q-002, ET-041).
+
+    Le journal est la source de verite du champ suspended_from ; aucune autre
+    table n'est interrogee pour reconstituer l'etat de suspension.
+    """
+    row = connection.execute(
+        text(
+            """
+            SELECT payload
+              FROM ledger_events
+             WHERE request_id = :request_id
+               AND event_type = 'StateTransitionApplied'
+               AND payload->>'transition_id' = 'TR-R-19'
+             ORDER BY request_seq DESC
+             LIMIT 1
+            """
+        ),
+        {"request_id": request_id},
+    ).first()
+    if row is None or not isinstance(row[0], dict):
+        return None
+    return dict(row[0])
+
+
 def verify_chain(connection: Connection, workspace_id: UUID) -> ChainVerification:
     """Recalcule toute la chaine d'un espace de travail."""
     return verify_events(_load_records(connection, workspace_id))

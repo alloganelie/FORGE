@@ -8,6 +8,7 @@ from __future__ import annotations
 
 from collections.abc import Callable, Mapping
 from dataclasses import dataclass, field
+from typing import Any
 
 from agent.lifecycle.core.states import ApprovalState, RequestState
 
@@ -78,6 +79,7 @@ class GuardContext:
     mandatory_control_failed: bool = False
     waiting_origin: RequestState | None = None
     suspended_from: RequestState | None = None
+    suspension_event: Mapping[str, Any] | None = None
     flags: Mapping[str, bool] = field(default_factory=dict)
 
     def flag(self, name: str) -> bool:

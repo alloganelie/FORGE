@@ -1,6 +1,6 @@
 {
   "milestone": "MS-0",
-  "generated_at": "2026-10-23T17:19:12+00:00",
+  "generated_at": "2026-10-23T20:21:54+00:00",
   "summary": {
     "ca_total": 195,
     "ca_green": 0,
@@ -12,7 +12,7 @@
     "in_scope_total": 0,
     "in_scope_green": 0,
     "in_scope_percent": 0.0,
-    "tests": 77,
+    "tests": 82,
     "orphan_tests": 0,
     "unknown_ids": 0,
     "requirements_total": 483,
@@ -3300,6 +3300,7 @@
     },
     "TR-R-03": {
       "covered_by": [
+        "backend/tests/integration/test_resume_db.py",
         "backend/tests/integration/test_tst18_db.py",
         "backend/tests/unit/test_transition_activation.py"
       ]
@@ -3311,6 +3312,7 @@
     },
     "TR-R-05": {
       "covered_by": [
+        "backend/tests/integration/test_resume_db.py",
         "backend/tests/integration/test_tst18_db.py",
         "backend/tests/unit/test_transition_activation.py"
       ]
@@ -3385,11 +3387,15 @@
     },
     "TR-R-19": {
       "covered_by": [
+        "backend/tests/integration/test_resume_db.py",
+        "backend/tests/unit/test_resume_target.py",
         "backend/tests/unit/test_transition_activation.py"
       ]
     },
     "TR-R-20": {
       "covered_by": [
+        "backend/tests/integration/test_resume_db.py",
+        "backend/tests/unit/test_resume_target.py",
         "backend/tests/unit/test_state_machines.py",
         "backend/tests/unit/test_transition_activation.py"
       ]

@@ -11,7 +11,7 @@
 
 Les fondations sont opérationnelles et vérifiables par des preuves observables :
 
-- `make check` est vert : format, typage strict, règles d'imports, génération, **77 tests**, traçabilité.
+- `make check` est vert : format, typage strict, règles d'imports, génération, **82 tests**, traçabilité.
 - **TST-18** est vert : 250 séquences aléatoires de commandes, invariants IV-01 à IV-15 vérifiés après chaque pas, plus un rejeu du parcours nominal sur PostgreSQL réel.
 - Le **journal chaîné** est testé, y compris les tentatives de contournement : UPDATE, DELETE et TRUNCATE refusés ; un faux `self_hash` est détecté par recalcul ; deux écritures concurrentes produisent `request_seq` 1 et 2 sans trou.
 - Le **tableau de bord** `docs/reports/spec-trace.html` est publié : 54/54 transitions couvertes, 0 test orphelin, 0 identifiant inconnu, 195 CA « hors périmètre » (MS-0 n'a aucun CA).
@@ -27,7 +27,7 @@ Les fondations sont opérationnelles et vérifiables par des preuves observables
 | Journal chaîné testé, contournements compris | **Vert** | `backend/tests/integration/test_ledger_db.py` (6 tests), `test_ledger_core.py` (5 tests) |
 | `spec_trace` publie un tableau de bord | **Vert** | `docs/reports/spec-trace.html`, `.md`, `.json`, historique `spec-trace-history.json` |
 | Intégration continue verte | **Prête et verte localement** | `.github/workflows/ci.yml` ; `make check` exécuté localement. La première exécution GitHub reste à faire après création du remote (écart E-01) |
-| `make check` existe et passe | **Vert** | sortie finale : 77 tests, `MS-0 : 0/0 CA exigibles verts, 0 sans test, 195 hors périmètre, 54/54 transitions couvertes, 0 orphelin` |
+| `make check` existe et passe | **Vert** | sortie finale : 82 tests, `MS-0 : 0/0 CA exigibles verts, 0 sans test, 195 hors périmètre, 54/54 transitions couvertes, 0 orphelins` |
 
 ---
 
@@ -62,7 +62,7 @@ Les fondations sont opérationnelles et vérifiables par des preuves observables
 ### 3.5 Moteur d'états
 
 - Six machines (R, C, A, D, V, E) générées depuis F 8.2 à 8.7 et T 7.2 dans `rulepacks/state_machines/` ; 53 transitions + TR-R-22 déclarée comme non-transition (révision).
-- Moteur pur, gardes pures, refus par défaut d'une garde inconnue, reprise pure (ET-036, ET-039, ET-041).
+- Moteur pur, gardes pures, refus par défaut d'une garde inconnue. La reprise est pure et lit l'état du moment de la suspension dans le champ `suspended_from` de l'événement TR-R-19 du journal (ET-036, ET-039, ET-041, Q-002).
 - Application transactionnelle : verrou, `row_version`, état, `state_changes`, journal ; conflit de version signalé (ET-037, ET-038 partiel : pas d'API 412).
 - TST-18 sur le modèle pur et sur PostgreSQL réel.
 
@@ -124,7 +124,7 @@ Les ET-045 à ET-052 dépendent du pipeline et des jobs, hors périmètre foncti
 | `backend/tests/unit/test_app.py` | API squelette, OpenAPI, frontend | 3 |
 | `backend/tests/unit/test_dependency_rules.py` | DR-01 à DR-07, 23 modules | 9 |
 | `backend/tests/unit/test_generated_enums.py` | ET-017, alignement spec/DB | 5 |
-| `backend/tests/unit/test_state_machines.py` | transitions, gardes, reprise | 7 |
+| `backend/tests/unit/test_state_machines.py` | transitions, gardes, reprise | 8 |
 | `backend/tests/unit/test_transition_activation.py` | les 54 TR exercées | 2 |
 | `backend/tests/unit/test_platform.py` | horloge, UUIDv7 | 5 |
 | `backend/tests/unit/test_openapi.py` | contrat versionné | 2 |
@@ -134,9 +134,11 @@ Les ET-045 à ET-052 dépendent du pipeline et des jobs, hors périmètre foncti
 | `backend/tests/integration/test_schema_db.py` | schéma, contraintes, RLS, migrations | 12 |
 | `backend/tests/integration/test_tst18_db.py` | parcours nominal persistant | 3 |
 | `backend/tests/unit/test_spec_trace.py` | outil de traçabilité | 4 |
+| `backend/tests/unit/test_resume_target.py` | Q-002 : reprise depuis l'événement de suspension | 4 |
+| `backend/tests/integration/test_resume_db.py` | Q-002 : lecture de `suspended_from` dans le journal | 1 |
 | `backend/tests/acceptance/test_ms0_exit_criteria.py` | preuves de sortie MS-0 | 4 |
 
-**Total : 77 tests.** Les tests PostgreSQL sont marqués `integration` et utilisent une base réelle.
+**Total : 82 tests.** Les tests PostgreSQL sont marqués `integration` et utilisent une base réelle.
 
 ---
 
@@ -161,7 +163,7 @@ Aucun test, contrainte, déclencheur ou règle de dépendance n'a été affaibli
 ## 7. Décisions prises
 
 - **Q-001 :** FORGE est réservé au frontend et à l'infrastructure ; il n'apparaît pas dans les livrables, rapports ou messages produits par le système.
-- **Q-002 :** la reprise revient à l'état d'origine, y compris Reçue et Vérification de faisabilité ; aucune reprise directe vers Finalisée.
+- **Q-002 (décision PO) :** la reprise revient à l'**état enregistré au moment de la suspension**, lu dans le champ `suspended_from` de l'événement TR-R-19 du journal. L'état initial n'est jamais utilisé ; la correction est couverte par 5 tests unitaires et PostgreSQL.
 - **Q-003 :** les portes de traçabilité s'appliquent au périmètre cumulé des jalons ; ET-355 devient bloquante au jalon final.
 - **ADR-001 à ADR-009** proposés dans `docs/adr/` : monolithe modulaire, pile Python, PostgreSQL, journal, machines, traçabilité, image, tests, configuration.
 - Le nom du projet n'apparaît pas dans les rapports générés ; les documents de développement (README) le conservent conformément à Q-001.
@@ -170,8 +172,8 @@ Aucun test, contrainte, déclencheur ou règle de dépendance n'a été affaibli
 
 ## 8. Questions ouvertes pour le Product Owner
 
-1. **Q-002** — valider la cible de reprise depuis Reçue et Vérification de faisabilité.
-2. **Q-003** — valider le périmètre cumulé des portes de traçabilité et l'activation finale d'ET-355.
+1. **Q-002** — tranchée par le PO le 2026-10-23 ; correction appliquée et testée.
+2. **Q-003** — tranchée par le PO le 2026-10-23 ; porte ET-355 activée au jalon final.
 3. Valider les ADR-001 à ADR-009 (aucune dépendance nouvelle hors outillage de test).
 
 ---
@@ -208,10 +210,10 @@ Aucun test, contrainte, déclencheur ou règle de dépendance n'a été affaibli
 ```text
 Tâche / jalon : MS-0 — Fondations
 Identifiants couverts : ET-001 à ET-044 (35 complets, 20 partiels), ET-353 à ET-356, ET-358, ET-372 ; IV-01 à IV-15 ; TR-R-01 à TR-R-27, TR-C-01 à TR-C-05, TR-A-01 à TR-A-04, TR-D-01 à TR-D-04, TR-V-01 à TR-V-03, TR-E-01 à TR-E-11
-Tests ajoutés ou modifiés : 77 tests (unitaires, propriétés, intégration PostgreSQL, acceptation)
-Résultat de make check : vert — 77 tests, 54/54 transitions couvertes, 0 orphelin, 0 identifiant inconnu
+Tests ajoutés ou modifiés : 82 tests (unitaires, propriétés, intégration PostgreSQL, acceptation)
+Résultat de make check : vert — 82 tests, 54/54 transitions couvertes, 0 orphelin, 0 identifiant inconnu
 Écarts par rapport à la spécification : E-01 à E-09 (voir section 6)
 Décisions prises : Q-001, Q-002, Q-003 ; ADR-001 à ADR-009
-Questions ouvertes : Q-002, Q-003
+Questions ouvertes : aucune (Q-002 et Q-003 tranchées)
 Risques constatés : CI distante non exécutée ; Docker requis ; ET-045 à ET-052 à planifier
 ```

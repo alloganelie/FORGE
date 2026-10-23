@@ -6,7 +6,9 @@ l'acteur et un instantane de contexte. Il ne lit ni la base, ni l'heure.
 
 from __future__ import annotations
 
+from collections.abc import Mapping
 from dataclasses import dataclass
+from typing import Any
 
 from agent.lifecycle.core.guards import GuardContext, GuardResult, evaluate_guards
 from agent.lifecycle.core.states import RequestState
@@ -43,7 +45,7 @@ class InvalidTransition(TransitionError):
 
 class ResumeTargetError(TransitionError):
     def __init__(self, origin: RequestState | None) -> None:
-        super().__init__("Reprise impossible : etat d'origine inconnu ou non reprenable")
+        super().__init__("Reprise impossible : etat de suspension inconnu ou non reprenable")
         self.origin = origin
 
 
@@ -103,21 +105,34 @@ class MachineSet:
         )
 
 
-def resume_target(origin: RequestState | None) -> RequestState:
+def resume_target(source: RequestState | Mapping[str, Any] | None) -> RequestState:
     """Etat de reprise pur (ET-041, TR-R-20).
 
-    Q-002 : la specification permet de suspendre depuis tout etat non final
-    (TR-R-19) mais TR-R-20 n'enumere pas Recue et Verification de faisabilite.
-    Hypothese retenue : la reprise revient a l'etat d'origine, sans saut direct
-    vers Finalisee. Une demande suspendue ne peut donc jamais etre finalisee.
+    Q-002 (tranchee par le PO) : la reprise revient a l'etat **enregistre au
+    moment de la suspension**, lu dans le champ suspended_from de l'evenement
+    TR-R-19 du journal. L'etat initial de la demande n'est jamais utilise.
+    Un etat direct reste accepte pour les appels internes deja typés.
     """
-    if origin is None or origin in (
+    suspended_from: RequestState | None
+    if isinstance(source, RequestState):
+        suspended_from = source
+    elif isinstance(source, Mapping):
+        raw = source.get("suspended_from")
+        if not isinstance(raw, str):
+            raise ResumeTargetError(None)
+        try:
+            suspended_from = RequestState(raw)
+        except ValueError as exc:
+            raise ResumeTargetError(None) from exc
+    else:
+        suspended_from = None
+    if suspended_from is None or suspended_from in (
         RequestState.SUSPENDED,
         RequestState.FINALIZED,
         RequestState.CANCELLED,
     ):
-        raise ResumeTargetError(origin)
-    return origin
+        raise ResumeTargetError(suspended_from)
+    return suspended_from
 
 
 def apply_transition(
@@ -151,7 +166,12 @@ def apply_transition(
             failures,
         )
     if transition.target == DYNAMIC:
-        return resume_target(context.suspended_from).value
+        source: RequestState | Mapping[str, Any] | None = (
+            context.suspension_event
+            if context.suspension_event is not None
+            else context.suspended_from
+        )
+        return resume_target(source).value
     if transition.target is None:
         raise InvalidTransition(
             transition_id,

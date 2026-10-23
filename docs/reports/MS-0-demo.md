@@ -39,8 +39,8 @@ make check
 **Attendu (fin de sortie) :**
 
 ```text
-77 passed in ...
-MS-0 : 0/0 CA exigibles verts, 0 sans test, 195 hors perimetre, 54/54 transitions couvertes, 77 tests, 0 orphelins.
+82 passed in ...
+MS-0 : 0/0 CA exigibles verts, 0 sans test, 195 hors perimetre, 54/54 transitions couvertes, 82 tests, 0 orphelins.
 Tableaux de bord ecrits : docs/reports/spec-trace.html, spec-trace.md, spec-trace.json
 ```
 
@@ -204,7 +204,7 @@ Ouvrez `.github/workflows/ci.yml`. Vous y voyez :
 | PO-07 Aucun contenu sans source | — | — | À partir de MS-5 | |
 | PO-08 Journaux sans données sensibles | — | — | À partir de MS-5 ; la démo n'utilise que des identifiants techniques | |
 | PO-09 Évaluations LLM | — | — | Aucun LLM en MS-0 | |
-| PO-10 Rapport traité | ✔ | `docs/reports/MS-0-rapport.md` et `QUESTIONS.md` | Écarts E-01 à E-09 listés ; Q-002 et Q-003 à trancher | |
+| PO-10 Rapport traité | ✔ | `docs/reports/MS-0-rapport.md` et `QUESTIONS.md` | Écarts E-01 à E-09 listés ; Q-002 et Q-003 tranchées | |
 
 **Verdict attendu si tout est bon :** « Validé ».  
 **Si un point est rouge :** utilisez le texte de refus fourni dans `docs/CHECKLIST-PO.md` et citez l'étape exacte de ce guide.

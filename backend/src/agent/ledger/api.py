@@ -21,6 +21,7 @@ from agent.ledger.core.hashchain import (
 from agent.ledger.infra.repository import (
     AppendedEvent,
     append_event,
+    latest_suspension_event,
     verify_chain,
     write_checkpoint,
 )
@@ -52,6 +53,7 @@ __all__ = [
     "append_event",
     "canonicalize",
     "compute_self_hash",
+    "latest_suspension_event",
     "module_info",
     "verify_chain",
     "verify_events",

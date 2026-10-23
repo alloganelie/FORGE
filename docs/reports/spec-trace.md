@@ -1,7 +1,7 @@
 # Tableau de bord specification <-> tests
 
 **Jalon :** MS-0  
-**Genere :** 2026-10-23T17:19:12+00:00
+**Genere :** 2026-10-23T20:21:54+00:00
 
 ## Synthese
 
@@ -15,7 +15,7 @@
 | Criteres verts (tous jalons) | 0 / 195 (0.0 %) |
 | Exigences RF/RB/RT couvertes | 1 / 483 (0.2 %) |
 | Transitions couvertes | 54 / 54 |
-| Tests | 77 |
+| Tests | 82 |
 | Tests orphelins | 0 |
 | Identifiants inconnus | 0 |
 

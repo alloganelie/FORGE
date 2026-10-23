@@ -6,17 +6,18 @@ state_changes et l'evenement de journal dans la meme transaction.
 
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from datetime import datetime
 from typing import Any
 from uuid import UUID
 
 from sqlalchemy import Connection, text
 
-from agent.ledger.api import append_event
+from agent.ledger.api import append_event, latest_suspension_event
 from agent.lifecycle.core.engine import (
     InvalidTransition,
     MachineSet,
+    ResumeTargetError,
     apply_transition,
 )
 from agent.lifecycle.core.guards import GuardContext
@@ -145,11 +146,40 @@ def apply_request_transition(
     if expected_row_version is not None and int(row["row_version"]) != expected_row_version:
         raise ConcurrencyConflict("row_version obsolete")
 
+    effective_context = context
+    if transition_id == "TR-R-20":
+        suspension_event = latest_suspension_event(connection, request_id)
+        suspended_value = (
+            suspension_event.get("suspended_from") if suspension_event is not None else None
+        )
+        if not isinstance(suspended_value, str):
+            raise TransitionRejected(
+                transition_id,
+                "evenement de suspension absent du journal",
+                "La reprise n'est pas possible : l'evenement de suspension est introuvable.",
+            )
+        projected = row["suspended_from"]
+        if projected is not None and str(projected) != suspended_value:
+            raise TransitionRejected(
+                transition_id,
+                "projection suspended_from incoherente avec le journal",
+                "La reprise n'est pas possible : l'etat de suspension est incoherent.",
+            )
+        effective_context = replace(context, suspension_event=suspension_event)
+
     try:
-        target = apply_transition(machines.get("R"), current, transition_id, actor, context)
+        target = apply_transition(
+            machines.get("R"), current, transition_id, actor, effective_context
+        )
     except InvalidTransition as exc:
         raise TransitionRejected(
             transition_id, exc.reason_internal, exc.reason_communicable
+        ) from exc
+    except ResumeTargetError as exc:
+        raise TransitionRejected(
+            transition_id,
+            "etat de suspension invalide dans le journal",
+            "La reprise n'est pas possible : l'etat de suspension est invalide.",
         ) from exc
 
     waiting_origin = row["waiting_origin"]
@@ -191,6 +221,8 @@ def apply_request_transition(
         "to_state": target,
         "actor": actor,
     }
+    if transition_id == "TR-R-19":
+        payload["suspended_from"] = current
     event = append_event(
         connection,
         workspace_id=workspace_id,

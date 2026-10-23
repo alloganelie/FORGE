@@ -81,6 +81,7 @@ class Workflow:
     request_state: RequestState | None = None
     waiting_origin: RequestState | None = None
     suspended_from: RequestState | None = None
+    suspension_event: dict[str, str] | None = None
     active_version: VersionView = field(default_factory=lambda: VersionView("v1"))
     revision_of: str | None = None
     history: list[str] = field(default_factory=list)
@@ -136,6 +137,7 @@ class Workflow:
             approver_authorized=True,
             waiting_origin=self.waiting_origin,
             suspended_from=self.suspended_from,
+            suspension_event=self.suspension_event,
         )
 
     def _apply_request(self, transition_id: str, actor: str, context: GuardContext) -> bool:
@@ -151,8 +153,11 @@ class Workflow:
         self.last_axis_actor["R"] = actor
         if target == RequestState.SUSPENDED.value:
             self.suspended_from = previous
+            if previous is not None:
+                self.suspension_event = {"suspended_from": previous.value}
         elif transition_id == "TR-R-20":
             self.suspended_from = None
+            self.suspension_event = None
         if target in (RequestState.BLOCKED.value, RequestState.AWAITING_DECISION.value):
             self.waiting_origin = previous
         elif transition_id in ("TR-R-13", "TR-R-14", "TR-R-23", "TR-R-24", "TR-R-26"):
