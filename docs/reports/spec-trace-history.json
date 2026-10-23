@@ -15,6 +15,14 @@
       "requirements_covered": 11,
       "transitions_covered": 54,
       "recorded_at": "2026-10-23T21:07:49+00:00"
+    },
+    "MS-2": {
+      "ca_green": 35,
+      "ca_total": 195,
+      "ca_percent": 17.9,
+      "requirements_covered": 11,
+      "transitions_covered": 54,
+      "recorded_at": "2026-10-23T21:35:56+00:00"
     }
   }
 }

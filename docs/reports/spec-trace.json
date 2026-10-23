@@ -1,18 +1,18 @@
 {
-  "milestone": "MS-1",
-  "generated_at": "2026-10-23T21:07:49+00:00",
+  "milestone": "MS-2",
+  "generated_at": "2026-10-23T21:35:56+00:00",
   "summary": {
     "ca_total": 195,
-    "ca_green": 4,
+    "ca_green": 35,
     "ca_red": 0,
     "ca_skipped": 0,
     "ca_no_test": 0,
-    "ca_out_of_scope": 191,
-    "ca_percent": 2.1,
-    "in_scope_total": 4,
-    "in_scope_green": 4,
+    "ca_out_of_scope": 160,
+    "ca_percent": 17.9,
+    "in_scope_total": 35,
+    "in_scope_green": 35,
     "in_scope_percent": 100.0,
-    "tests": 119,
+    "tests": 160,
     "orphan_tests": 0,
     "unknown_ids": 0,
     "requirements_total": 483,
@@ -22,100 +22,140 @@
     "transitions_covered": 54
   },
   "evolution": {
-    "ca_green": 4,
+    "ca_green": 35,
     "ca_total": 195,
-    "ca_percent": 2.1,
+    "ca_percent": 17.9,
     "previous": {
-      "milestone": "MS-0",
-      "ca_green": 0,
+      "milestone": "MS-1",
+      "ca_green": 4,
       "ca_total": 195,
-      "ca_percent": 0.0,
+      "ca_percent": 2.1,
       "requirements_covered": 11,
       "transitions_covered": 54,
-      "recorded_at": "2026-10-23T20:42:31+00:00"
+      "recorded_at": "2026-10-23T21:07:49+00:00"
     },
-    "delta": 2.1
+    "delta": 15.8
   },
   "criteria": {
     "CA-001": {
-      "status": "out-of-scope",
-      "tests": []
+      "status": "green",
+      "tests": [
+        "backend/tests/acceptance/test_request_flow_ca.py::test_ca001_request_is_recorded_with_original_text"
+      ]
     },
     "CA-002": {
-      "status": "out-of-scope",
-      "tests": []
+      "status": "green",
+      "tests": [
+        "backend/tests/acceptance/test_request_flow_ca.py::test_ca002_type_and_format_are_separate"
+      ]
     },
     "CA-003": {
-      "status": "out-of-scope",
-      "tests": []
+      "status": "green",
+      "tests": [
+        "backend/tests/acceptance/test_request_flow_ca.py::test_ca003_resolved_parameter_does_not_create_question"
+      ]
     },
     "CA-004": {
-      "status": "out-of-scope",
-      "tests": []
+      "status": "green",
+      "tests": [
+        "backend/tests/acceptance/test_request_flow_ca.py::test_ca004_unauthorized_submitter_is_refused"
+      ]
     },
     "CA-005": {
-      "status": "out-of-scope",
-      "tests": []
+      "status": "green",
+      "tests": [
+        "backend/tests/acceptance/test_request_flow_ca.py::test_ca005_non_significant_ambiguity_does_not_question"
+      ]
     },
     "CA-006": {
-      "status": "out-of-scope",
-      "tests": []
+      "status": "green",
+      "tests": [
+        "backend/tests/acceptance/test_request_flow_ca.py::test_ca006_significant_ambiguity_creates_targeted_question"
+      ]
     },
     "CA-007": {
-      "status": "out-of-scope",
-      "tests": []
+      "status": "green",
+      "tests": [
+        "backend/tests/acceptance/test_request_flow_ca.py::test_ca007_blocking_questions_come_first"
+      ]
     },
     "CA-008": {
-      "status": "out-of-scope",
-      "tests": []
+      "status": "green",
+      "tests": [
+        "backend/tests/acceptance/test_request_flow_ca.py::test_ca008_unanswered_choice_stays_pending"
+      ]
     },
     "CA-009": {
-      "status": "out-of-scope",
-      "tests": []
+      "status": "green",
+      "tests": [
+        "backend/tests/acceptance/test_request_flow_ca.py::test_ca009_punctual_instruction_does_not_change_rules"
+      ]
     },
     "CA-010": {
-      "status": "out-of-scope",
-      "tests": []
+      "status": "green",
+      "tests": [
+        "backend/tests/acceptance/test_request_flow_ca.py::test_ca010_multiple_deliverables_are_detected_not_split"
+      ]
     },
     "CA-011": {
-      "status": "out-of-scope",
-      "tests": []
+      "status": "green",
+      "tests": [
+        "backend/tests/acceptance/test_request_flow_ca.py::test_ca011_missing_model_blocks"
+      ]
     },
     "CA-012": {
-      "status": "out-of-scope",
-      "tests": []
+      "status": "green",
+      "tests": [
+        "backend/tests/acceptance/test_request_flow_ca.py::test_ca012_diagnostic_covers_all_dimensions"
+      ]
     },
     "CA-013": {
-      "status": "out-of-scope",
-      "tests": []
+      "status": "green",
+      "tests": [
+        "backend/tests/acceptance/test_request_flow_ca.py::test_ca013_missing_condition_blocks_with_reason"
+      ]
     },
     "CA-014": {
-      "status": "out-of-scope",
-      "tests": []
+      "status": "green",
+      "tests": [
+        "backend/tests/acceptance/test_request_flow_ca.py::test_ca014_diagnostic_remains_available_after_block"
+      ]
     },
     "CA-015": {
-      "status": "out-of-scope",
-      "tests": []
+      "status": "green",
+      "tests": [
+        "backend/tests/acceptance/test_request_flow_ca.py::test_ca015_diagnostic_distinguishes_outcomes"
+      ]
     },
     "CA-016": {
-      "status": "out-of-scope",
-      "tests": []
+      "status": "green",
+      "tests": [
+        "backend/tests/acceptance/test_request_flow_ca.py::test_ca016_versions_are_pinned_at_feasibility"
+      ]
     },
     "CA-017": {
-      "status": "out-of-scope",
-      "tests": []
+      "status": "green",
+      "tests": [
+        "backend/tests/acceptance/test_request_flow_ca.py::test_ca017_uncertain_rights_suspend_operation"
+      ]
     },
     "CA-018": {
-      "status": "out-of-scope",
-      "tests": []
+      "status": "green",
+      "tests": [
+        "backend/tests/acceptance/test_request_flow_ca.py::test_ca018_rule_change_does_not_change_pins"
+      ]
     },
     "CA-019": {
-      "status": "out-of-scope",
-      "tests": []
+      "status": "green",
+      "tests": [
+        "backend/tests/acceptance/test_request_flow_ca.py::test_ca019_diagnostic_only_does_not_produce_or_pin"
+      ]
     },
     "CA-020": {
-      "status": "out-of-scope",
-      "tests": []
+      "status": "green",
+      "tests": [
+        "backend/tests/acceptance/test_request_flow_ca.py::test_ca020_protected_reason_is_general_for_unauthorized_actor"
+      ]
     },
     "CA-021": {
       "status": "out-of-scope",
@@ -574,44 +614,62 @@
       "tests": []
     },
     "CA-135": {
-      "status": "out-of-scope",
-      "tests": []
+      "status": "green",
+      "tests": [
+        "backend/tests/acceptance/test_request_flow_ca.py::test_ca135_status_contains_tracking_fields"
+      ]
     },
     "CA-136": {
-      "status": "out-of-scope",
-      "tests": []
+      "status": "green",
+      "tests": [
+        "backend/tests/acceptance/test_request_flow_ca.py::test_ca136_items_distinguish_states"
+      ]
     },
     "CA-137": {
-      "status": "out-of-scope",
-      "tests": []
+      "status": "green",
+      "tests": [
+        "backend/tests/acceptance/test_request_flow_ca.py::test_ca137_protected_information_is_not_exposed"
+      ]
     },
     "CA-138": {
-      "status": "out-of-scope",
-      "tests": []
+      "status": "green",
+      "tests": [
+        "backend/tests/acceptance/test_request_flow_ca.py::test_ca138_reason_depends_on_rights"
+      ]
     },
     "CA-139": {
-      "status": "out-of-scope",
-      "tests": []
+      "status": "green",
+      "tests": [
+        "backend/tests/acceptance/test_request_flow_ca.py::test_ca139_status_does_not_announce_success"
+      ]
     },
     "CA-140": {
-      "status": "out-of-scope",
-      "tests": []
+      "status": "green",
+      "tests": [
+        "backend/tests/acceptance/test_request_flow_ca.py::test_ca140_status_uses_functional_states"
+      ]
     },
     "CA-141": {
       "status": "out-of-scope",
       "tests": []
     },
     "CA-142": {
-      "status": "out-of-scope",
-      "tests": []
+      "status": "green",
+      "tests": [
+        "backend/tests/acceptance/test_request_flow_ca.py::test_ca142_natural_language_request_needs_no_internal_knowledge"
+      ]
     },
     "CA-143": {
-      "status": "out-of-scope",
-      "tests": []
+      "status": "green",
+      "tests": [
+        "backend/tests/acceptance/test_request_flow_ca.py::test_ca143_history_is_returned"
+      ]
     },
     "CA-144": {
-      "status": "out-of-scope",
-      "tests": []
+      "status": "green",
+      "tests": [
+        "backend/tests/acceptance/test_request_flow_ca.py::test_ca144_public_reason_has_no_technical_jargon"
+      ]
     },
     "CA-145": {
       "status": "out-of-scope",
@@ -798,12 +856,16 @@
       "tests": []
     },
     "CA-189": {
-      "status": "out-of-scope",
-      "tests": []
+      "status": "green",
+      "tests": [
+        "backend/tests/acceptance/test_request_flow_ca.py::test_ca189_confirmed_split_creates_two_independent_requests"
+      ]
     },
     "CA-190": {
-      "status": "out-of-scope",
-      "tests": []
+      "status": "green",
+      "tests": [
+        "backend/tests/acceptance/test_request_flow_ca.py::test_ca190_user_answer_is_candidate_qi02"
+      ]
     },
     "CA-191": {
       "status": "out-of-scope",

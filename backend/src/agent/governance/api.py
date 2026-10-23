@@ -309,6 +309,27 @@ class GovernanceService:
     def pins_for_request(self, request_id: UUID) -> tuple[Pin, ...]:
         return list_pins(self.connection, self.workspace_id, request_id)
 
+    def pin_for_request(
+        self, request_id: UUID, version_ids: tuple[UUID, ...], actor_id: UUID
+    ) -> tuple[Pin, ...]:
+        """Epinglage effectue par le moteur a la faisabilite (ET-059)."""
+        for version_id in version_ids:
+            version = self.get_artifact(version_id)
+            if version.status is not ArtifactStatus.APPROVED:
+                raise InvalidTransition("Seule une version approuvee peut etre epinglee.")
+            insert_pin(
+                self.connection,
+                workspace_id=self.workspace_id,
+                request_id=request_id,
+                version_id=version_id,
+                pinned_by=actor_id,
+                pinned_at=self.clock.now(),
+            )
+        return list_pins(self.connection, self.workspace_id, request_id)
+
+    def approved_versions(self) -> tuple[ArtifactVersion, ...]:
+        return self._approved()
+
     def source_authorizations(self, version_id: UUID, source_key: str) -> dict[str, Any]:
         version = self.get_artifact(version_id)
         if version.artifact_type is not ArtifactType.SOURCE_REGISTRY:

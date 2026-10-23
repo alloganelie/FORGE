@@ -9,6 +9,14 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import Final
 
+from agent.conversation.core.templates import (
+    STATE_LABELS,
+    TEMPLATE_VERSION,
+    filter_free_text,
+    render,
+    status_message,
+)
+
 MODULE_ID: Final[str] = "MOD-18"
 MODULE_NAME: Final[str] = "conversation"
 
@@ -23,3 +31,14 @@ class ModuleInfo:
 
 def module_info() -> ModuleInfo:
     return ModuleInfo(module_id=MODULE_ID, name=MODULE_NAME)
+
+
+__all__ = [
+    "STATE_LABELS",
+    "TEMPLATE_VERSION",
+    "ModuleInfo",
+    "filter_free_text",
+    "module_info",
+    "render",
+    "status_message",
+]

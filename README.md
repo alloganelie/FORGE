@@ -61,7 +61,7 @@ tools/
 |---|---|---|
 | MS-0 | Fondations (dépôt, CI, BDD, migrations, moteur d'états, traçabilité) | **Validé (tag ms-0)** |
 | MS-1 | Gouvernance (rôles, espaces de travail, lots de règles) | **Validé (tag ms-1)** |
-| MS-2 | Demande et faisabilité | Non démarré |
+| MS-2 | Demande et faisabilité | **Terminé — en revue PO** |
 | MS-3 | Sources et preuves | Non démarré |
 | MS-4 | Cartographie et contradictions | Non démarré |
 | MS-5 | Atomes et rendu | Non démarré |
@@ -86,7 +86,13 @@ La gouvernance est versionnée et validée : quatre JSON Schemas v1, pipeline en
 minimale SCR-15/SCR-17 avec l'en-tête FORGE. Voir docs/reports/MS-1-rapport.md
 et docs/reports/MS-1-demo.md.
 
-## Commandes disponibles (après MS-1)
+## État MS-2
+
+Le squelette de bout en bout est en place : demande, clarification, faisabilité,
+épinglage, statuts séparés et passerelle LLM en rejeu strict. Voir
+docs/reports/MS-2-rapport.md et docs/reports/MS-2-demo.md.
+
+## Commandes disponibles (après MS-2)
 
 ```bash
 make check                    # Format · types · dépendances · tests · traçabilité
@@ -95,6 +101,7 @@ make spec-trace               # Tableau de bord spec <-> tests (HTML + Markdown)
 make gen-transitions          # Génère le moteur d'états depuis la spec
 make verify-chain             # Vérifie les invariants du journal chaîné
 make demo-governance          # Démonstration gouvernance (sans persistance)
+make demo-requests            # Parcours demande -> faisabilité (rejeu, sans persistance)
 make demo-ledger              # Démonstration du journal chaîné
 make seed-governance          # Prépare la console locale de gouvernance
 

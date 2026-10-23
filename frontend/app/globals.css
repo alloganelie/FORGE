@@ -1,0 +1,8 @@
+*{box-sizing:border-box}body{margin:0;font-family:Segoe UI,Arial,sans-serif;background:#f6f8fa;color:#17212b}
+.forge-banner{background:#17212b;color:#fff;padding:14px 24px;display:flex;gap:18px;align-items:center;flex-wrap:wrap}
+.forge-banner strong{letter-spacing:.08em;font-size:1.25rem}.forge-banner span{color:#c9d4df;font-size:.9rem}
+.forge-banner nav{margin-left:auto}.forge-banner a{color:#fff;margin-left:14px;text-decoration:none}
+main{max-width:1100px;margin:0 auto;padding:24px}.strip{display:flex;gap:10px;flex-wrap:wrap;margin:14px 0}
+.axis{border:1px solid #d9e1e8;border-radius:8px;padding:10px 12px;background:#fff;min-width:130px}
+.axis b{display:block;color:#5b6b7b;font-size:.75rem;text-transform:uppercase}.provisional{background:#fff6dd;color:#7a5200}
+.card{background:#fff;border:1px solid #d9e1e8;border-radius:8px;padding:16px;margin:12px 0}

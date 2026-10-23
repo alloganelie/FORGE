@@ -8,7 +8,7 @@ PYTHON ?= python3
 endif
 
 .PHONY: check test test-acceptance tst18 spec-trace gen-transitions gen-enums verify-chain \
-        db-up db-down demo-ledger demo-governance seed-governance spec toc index briefs brief fmt
+        db-up db-down demo-ledger demo-governance demo-requests seed-governance spec toc index briefs brief fmt
 
 check:  ## format, types, dependances, generation, tests, tracabilite
 	$(PYTHON) tools/check.py check
@@ -39,6 +39,9 @@ demo-ledger:
 
 demo-governance:
 	$(PYTHON) tools/check.py demo-governance
+
+demo-requests:
+	$(PYTHON) tools/check.py demo-requests
 
 seed-governance:
 	$(PYTHON) tools/check.py seed-governance

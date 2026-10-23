@@ -1,8 +1,8 @@
 # PROGRESS — état d'avancement (mis à jour par l'agent après chaque tranche)
 
-**Jalon courant :** MS-2 — Demande et faisabilité (prêt à démarrer)
-**Dernière tranche terminée :** MS-1 validé par le PO (tag ms-1)
-**Prochaine tranche :** MS-2, section 3 (voir `docs/milestones/MS-2.md`).
+**Jalon courant :** MS-2 — Demande et faisabilité (terminé, en revue Product Owner)
+**Dernière tranche terminée :** T20 — rapport et guide de démonstration MS-2
+**Prochaine tranche :** aucune ; **ne pas commencer MS-3** avant la revue PO.
 
 ## Fait — MS-0 (fondations)
 
@@ -12,32 +12,41 @@
 
 ## Fait — MS-1 (gouvernance)
 
-4. **T11 — Schémas et CEL.** Quatre JSON Schemas v1 versionnés ; évaluateur CEL restreint et encapsulé ; arithmétique décimale ; contrôle AST anti-`float` ; ADR-010.
-5. **T12 — Base et service.** Migration `0002_governance` : `governance_artifact_versions`, `request_pins`, `change_proposals`, `governance_observations`, `role_assignments` ; déclencheurs d'immuabilité et de non-rétroactivité ; RLS ; service de gouvernance (rôles, versions, approbation, épinglage, impact).
-6. **T13 — Pipeline et critères.** Pipeline en 9 étapes composables ; tests de règles ; observations sur exemple contradictoire ; CA-150, CA-151, CA-152, CA-153 verts.
-7. **T14 — Console et démonstration.** SCR-15/SCR-17 avec en-tête FORGE ; API JSON ; scripts `demo-governance` et `seed-governance` ; refus d'un utilisateur ordinaire démontré.
-8. **T15 — Documentation.** Rapport `docs/reports/MS-1-rapport.md`, guide `docs/reports/MS-1-demo.md`, ADR-010.
+4. **T11 — Schémas et CEL.** JSON Schemas v1, évaluateur CEL décimal, contrôle anti-`float`, ADR-010.
+5. **T12 — Base et service.** Migration `0002_governance`, artefacts immuables, épinglage, rôles, RLS.
+6. **T13 — Pipeline et critères.** Pipeline 9 étapes, CA-150 à CA-153, TST-15.
+7. **T14 — Console et démonstration.** SCR-15/SCR-17 avec FORGE, API, démos.
+8. **T15 — Documentation.** Rapport et guide MS-1.
+
+## Fait — MS-2 (demande et faisabilité)
+
+9. **T16 — Migration et passerelle LLM.** `0003_requests` ; `run_task` unique, validation Pydantic, erreurs typées, journal `llm_calls`, rejeu strict sans fournisseur externe.
+10. **T17 — Compréhension et clarification.** LT-01/LT-02 en rejeu, paramètres avec citation, questions bloquantes hiérarchisées, CA-001 à CA-010, CA-142, CA-189, CA-190.
+11. **T18 — Faisabilité.** Diagnostic en 7 dimensions, motifs MB, épinglage des versions, blocage/suspension, CA-011 à CA-020.
+12. **T19 — Suivi et interface.** Gabarits d'état français, statuts R/C/A/D/V séparés, historique, SCR-15/MS-2 Next.js avec `StatusStrip`, CA-135 à CA-144.
+13. **T20 — Documentation.** Rapport `docs/reports/MS-2-rapport.md`, guide `docs/reports/MS-2-demo.md`, démo `make demo-requests`.
 
 ## Résultat
 
-- `make check` : **vert** — format, mypy strict, dépendances, contrôle décimal, génération, **119 tests**, traçabilité.
-- Tableau de bord : **MS-1, 4/4 CA exigibles verts**, 0 sans test, 191 CA hors périmètre, 54/54 transitions, 0 orphelin.
-- TST-15 : vert ; lot de règles approuvé de bout en bout ; épinglage et non-rétroactivité testés.
-- Aucun test, contrainte ou déclencheur MS-0 affaibli.
+- `make check` : **vert** — **160 tests**, mypy strict, dépendances, contrôle décimal, génération, traçabilité.
+- Tableau de bord : **MS-2, 35/35 CA exigibles verts** (31 CA MS-2 + 4 CA MS-1 cumulés), 0 sans test, 160 tests, 0 orphelin.
+- TST-01, TST-02 et TST-14 (partie suivi) : verts.
+- Squelette de bout en bout : demande → clarification → faisabilité → statut, démontré par `make demo-requests`.
+- Aucun test, contrainte ou déclencheur des jalons précédents affaibli.
 
 ## Décisions prises
 
-- Q-001 : FORGE dans l'en-tête de la console, jamais dans les livrables/messages.
-- Q-002 : reprise depuis `suspended_from` du journal (corrigée MS-0).
-- Q-003 : portes de traçabilité au périmètre cumulé.
-- ADR-010 : `jsonschema` pour les schémas, évaluateur CEL restreint et décimal.
-- E-01 : levée (remote https://github.com/alloganelie/FORGE.git configuré, code et tags poussés, CI GitHub Actions active).
+- Q-001 : FORGE dans l'en-tête de l'interface, jamais dans les messages/livrables.
+- Q-002, Q-003 : décisions antérieures inchangées.
+- E-01 : **levée** — remote GitHub configuré, branches/tags synchronisés, CI active (information PO).
+- MS-2 : les tests et la CI utilisent uniquement des réponses LLM rejouées (`ReplayAdapter`) ; aucun fournisseur payant.
+- Les sorties LLM sont validées par Pydantic ; un refus ou une sortie invalide est un échec typé.
 
 ## Questions en attente pour le Product Owner
 
-- Aucune question bloquante (Q-001, Q-002, Q-003 tranchées).
-- Points documentés du rapport MS-1 : ET-057/059/060/063/064/066 partiels et console sans OIDC (à compléter dans les jalons ultérieurs comme prévu).
+- Aucune question bloquante.
+- Points partiels documentés : ET-231/238/243/246/248/249/253 à 255/257/259/261/262/297/299 ; voir le rapport MS-2.
 
 ## Prochaine commande à lancer
 
-`make check` — puis démarrer MS-2 (voir `docs/milestones/MS-2.md`).
+`make check` — puis suivre `docs/reports/MS-2-demo.md`.

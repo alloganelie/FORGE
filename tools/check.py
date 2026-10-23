@@ -176,6 +176,7 @@ def main(argv: list[str] | None = None) -> int:
             "verify-chain",
             "demo-ledger",
             "demo-governance",
+            "demo-requests",
             "seed-governance",
             "db-up",
             "db-down",
@@ -220,6 +221,9 @@ def main(argv: list[str] | None = None) -> int:
     elif args.target == "demo-governance":
         sync()
         _run([_venv_python(), "tools/demo_governance.py"])
+    elif args.target == "demo-requests":
+        sync()
+        _run([_venv_python(), "tools/demo_requests.py"])
     elif args.target == "seed-governance":
         sync()
         _run([_venv_python(), "tools/seed_governance_demo.py"])
