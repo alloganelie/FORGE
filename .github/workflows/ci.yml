@@ -27,7 +27,7 @@ jobs:
           --health-timeout 3s
           --health-retries 30
     env:
-      AGENT_TEST_DATABASE_URL: postgresql+psycopg://agent:agent@localhost:5432/agent_test
+      FORGE_TEST_DATABASE_URL: postgresql+psycopg://agent:agent@localhost:5432/agent_test
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5

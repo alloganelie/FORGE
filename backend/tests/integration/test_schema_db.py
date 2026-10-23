@@ -18,7 +18,10 @@ from tools.gen_enums import build_enums
 
 ROOT = Path(__file__).resolve().parents[3]
 DB_URL = os.environ.get(
-    "AGENT_TEST_DATABASE_URL", "postgresql+psycopg://agent:agent@localhost:55432/agent_test"
+    "FORGE_TEST_DATABASE_URL",
+    os.environ.get(
+        "AGENT_TEST_DATABASE_URL", "postgresql+psycopg://agent:agent@localhost:55432/agent_test"
+    ),
 )
 WORKSPACE_ID = UUID("11111111-1111-7111-8111-111111111111")
 REQUEST_ID = UUID("44444444-4444-7444-8444-444444444444")

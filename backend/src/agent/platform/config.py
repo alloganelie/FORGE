@@ -17,6 +17,10 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 
 _DATABASE_SCHEMES = ("postgresql+psycopg://", "postgresql+psycopg_async://")
 _WORKSPACE_NIL = UUID("00000000-0000-0000-0000-000000000000")
+# Variables d'infrastructure du runner, sans rapport avec la configuration applicative.
+_NON_CONFIG_AGENT_VARS = frozenset(
+    {"AGENT_TOOLSDIRECTORY", "AGENT_TEMPDIRECTORY", "AGENT_TEST_DATABASE_URL"}
+)
 
 
 class ConfigError(RuntimeError):
@@ -85,7 +89,9 @@ class Settings(BaseSettings):
         unknown = sorted(
             key
             for key in os.environ
-            if key.upper().startswith("AGENT_") and key.upper() not in known
+            if key.upper().startswith("AGENT_")
+            and key.upper() not in known
+            and key.upper() not in _NON_CONFIG_AGENT_VARS
         )
         if unknown:
             raise ValueError(f"variables de configuration inconnues : {', '.join(unknown)}")

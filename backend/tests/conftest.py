@@ -17,7 +17,9 @@ from sqlalchemy.engine import make_url
 
 ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_TEST_URL = "postgresql+psycopg://agent:agent@localhost:55432/agent_test"
-TEST_DATABASE_URL = os.environ.get("AGENT_TEST_DATABASE_URL", DEFAULT_TEST_URL)
+TEST_DATABASE_URL = os.environ.get(
+    "FORGE_TEST_DATABASE_URL", os.environ.get("AGENT_TEST_DATABASE_URL", DEFAULT_TEST_URL)
+)
 WORKSPACE_ID = UUID("11111111-1111-7111-8111-111111111111")
 USER_ID = UUID("22222222-2222-7222-8222-222222222222")
 OTHER_USER_ID = UUID("33333333-3333-7333-8333-333333333333")

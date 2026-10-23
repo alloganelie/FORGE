@@ -116,15 +116,19 @@ def acceptance_tests() -> None:
 def ensure_database() -> None:
     """Demarre PostgreSQL local si la base de test n'est pas joignable."""
     url = os.environ.get(
-        "AGENT_TEST_DATABASE_URL",
-        "postgresql+psycopg://agent:agent@localhost:55432/agent_test",
+        "FORGE_TEST_DATABASE_URL",
+        os.environ.get(
+            "AGENT_TEST_DATABASE_URL",
+            "postgresql+psycopg://agent:agent@localhost:55432/agent_test",
+        ),
     ).replace("+psycopg", "")
+    admin_url = url.rsplit("/", 1)[0] + "/postgres"
     probe = (
         "import os, psycopg; "
         "psycopg.connect(os.environ['CHECK_DB_URL'], connect_timeout=3); "
         "print('PostgreSQL joignable')"
     )
-    env_probe = dict(os.environ, CHECK_DB_URL=url)
+    env_probe = dict(os.environ, CHECK_DB_URL=admin_url)
     completed = subprocess.run([_venv_python(), "-c", probe], cwd=ROOT, env=env_probe, check=False)
     if completed.returncode != 0:
         print("PostgreSQL local indisponible : demarrage du conteneur...")
