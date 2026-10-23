@@ -9,6 +9,15 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import Final
 
+from agent.transform.core.cel import (
+    CalculationResult,
+    CelError,
+    calculate,
+    compile_expression,
+    evaluate,
+)
+from agent.transform.core.decimal_math import DecimalPolicy, UnitTable
+
 MODULE_ID: Final[str] = "MOD-10"
 MODULE_NAME: Final[str] = "transform"
 
@@ -23,3 +32,16 @@ class ModuleInfo:
 
 def module_info() -> ModuleInfo:
     return ModuleInfo(module_id=MODULE_ID, name=MODULE_NAME)
+
+
+__all__ = [
+    "CalculationResult",
+    "CelError",
+    "DecimalPolicy",
+    "ModuleInfo",
+    "UnitTable",
+    "calculate",
+    "compile_expression",
+    "evaluate",
+    "module_info",
+]

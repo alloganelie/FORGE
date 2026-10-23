@@ -12,6 +12,7 @@ license = { text = "Proprietary" }
 dependencies = [
   "alembic>=1.14,<2",
   "fastapi>=0.115,<1",
+  "jsonschema>=4.26.0",
   "psycopg[binary]>=3.2,<4",
   "pydantic>=2.10,<3",
   "pydantic-settings>=2.7,<3",
@@ -28,6 +29,7 @@ dev = [
   "pytest>=8.3,<9",
   "pytest-cov>=6.0,<7",
   "ruff>=0.8,<1",
+  "types-jsonschema>=4.26.0.20261006",
   "types-pyyaml>=6.0",
 ]
 
@@ -70,6 +72,7 @@ ignore = ["S101", "RUF001", "RUF002", "RUF003"]
 "tools/**" = ["T201"]
 "tools/check.py" = ["S603", "S607"]
 "tools/spec_trace.py" = ["E501", "S314"]
+"backend/src/agent/interfaces/rest/governance.py" = ["E501", "B008"]
 
 [tool.mypy]
 python_version = "3.13"

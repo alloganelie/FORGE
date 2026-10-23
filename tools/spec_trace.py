@@ -726,7 +726,7 @@ def write_outputs(report: Report) -> None:
 def default_milestone() -> str:
     progress = REPORTS / "PROGRESS.md"
     if progress.is_file():
-        match = re.search(r"Jalon courant\s*:\s*(MS-\d+)", progress.read_text(encoding="utf-8"))
+        match = re.search(r"Jalon courant[^\n]*?(MS-\d+)", progress.read_text(encoding="utf-8"))
         if match:
             return match.group(1)
     return "MS-0"

@@ -1,0 +1,211 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agent.local/schemas/v1/rule_pack.schema.json",
+  "title": "Lot de regles v1",
+  "type": "object",
+  "required": [
+    "meta",
+    "deliverable_types",
+    "quality",
+    "priority_rules",
+    "transformations",
+    "calculations",
+    "rules"
+  ],
+  "properties": {
+    "meta": {
+      "type": "object",
+      "required": [
+        "key",
+        "version",
+        "language",
+        "title"
+      ],
+      "properties": {
+        "key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "version": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "language": {
+          "type": "string",
+          "enum": [
+            "fr"
+          ]
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "deliverable_types": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "key",
+          "template",
+          "allowed_formats",
+          "mandatory_controls"
+        ],
+        "properties": {
+          "key": {
+            "type": "string"
+          },
+          "template": {
+            "type": "object",
+            "required": [
+              "key",
+              "version"
+            ],
+            "properties": {
+              "key": {
+                "type": "string"
+              },
+              "version": {
+                "type": "integer",
+                "minimum": 1
+              }
+            }
+          },
+          "allowed_formats": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "mandatory_controls": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "quality": {
+      "type": "object"
+    },
+    "priority_rules": {
+      "type": "array"
+    },
+    "transformations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "type",
+          "function"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          },
+          "function": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "calculations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "formula"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "formula": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "controls_config": {
+      "type": "object"
+    },
+    "rules": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "formula"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "formula": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "rule_tests": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "formula",
+          "inputs",
+          "expected"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "formula": {
+            "type": "string"
+          },
+          "inputs": {
+            "type": "object"
+          },
+          "expected": {}
+        }
+      }
+    },
+    "examples": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "rule_id",
+          "inputs",
+          "claimed_outcome"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "rule_id": {
+            "type": "string"
+          },
+          "inputs": {
+            "type": "object"
+          },
+          "claimed_outcome": {}
+        }
+      }
+    }
+  },
+  "additionalProperties": true
+}

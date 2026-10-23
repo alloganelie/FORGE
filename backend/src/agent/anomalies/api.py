@@ -9,6 +9,12 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import Final
 
+from agent.anomalies.core.autofix import (
+    AUTOFIX_FUNCTIONS,
+    UnknownAutofix,
+    apply_autofix,
+)
+
 MODULE_ID: Final[str] = "MOD-13"
 MODULE_NAME: Final[str] = "anomalies"
 
@@ -23,3 +29,12 @@ class ModuleInfo:
 
 def module_info() -> ModuleInfo:
     return ModuleInfo(module_id=MODULE_ID, name=MODULE_NAME)
+
+
+__all__ = [
+    "AUTOFIX_FUNCTIONS",
+    "ModuleInfo",
+    "UnknownAutofix",
+    "apply_autofix",
+    "module_info",
+]

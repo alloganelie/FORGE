@@ -9,8 +9,10 @@ from __future__ import annotations
 from fastapi import FastAPI
 from fastapi.responses import HTMLResponse
 from pydantic import BaseModel, ConfigDict
+from sqlalchemy import create_engine
 
 from agent import __version__
+from agent.interfaces.rest.governance import router as governance_router
 from agent.platform.config import Settings, load_settings
 
 FORGE_TITLE = "FORGE - Framework for Orchestrated Report Generation and Evaluation"
@@ -21,7 +23,7 @@ _LANDING = """<!doctype html>
 <body>
   <header><h1>FORGE</h1>
   <p>Framework for Orchestrated Report Generation and Evaluation</p></header>
-  <main><p>Fondations MS-0 : aucune fonction metier n'est encore disponible.</p></main>
+  <main><p>Console de gouvernance : <a href="/governance">acceder</a>.</p></main>
 </body>
 </html>
 """
@@ -42,6 +44,9 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     """Construit l'application ; la configuration est validee au demarrage."""
     current = settings if settings is not None else load_settings()
     app = FastAPI(title=FORGE_TITLE, version=__version__)
+    app.state.settings = current
+    app.state.engine = create_engine(current.database_url)
+    app.include_router(governance_router)
 
     @app.get("/healthz", response_model=Health, tags=["system"])
     def healthz() -> Health:

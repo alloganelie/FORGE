@@ -1,0 +1,81 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agent.local/schemas/v1/template.schema.json",
+  "title": "Modele documentaire v1",
+  "type": "object",
+  "required": [
+    "template",
+    "elements"
+  ],
+  "properties": {
+    "template": {
+      "type": "object",
+      "required": [
+        "key",
+        "version"
+      ],
+      "properties": {
+        "key": {
+          "type": "string"
+        },
+        "version": {
+          "type": "integer",
+          "minimum": 1
+        }
+      }
+    },
+    "elements": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "key",
+          "mandatory",
+          "on_missing"
+        ],
+        "properties": {
+          "key": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "mandatory": {
+            "type": "boolean"
+          },
+          "on_missing": {
+            "type": "string",
+            "enum": [
+              "block",
+              "omit",
+              "mention_unavailable"
+            ]
+          },
+          "depends_on": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "allowed_transformations": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "files": {
+      "type": "object"
+    },
+    "presentation_limits": {
+      "type": "object"
+    },
+    "fixed_texts": {
+      "type": "array"
+    }
+  },
+  "additionalProperties": true
+}

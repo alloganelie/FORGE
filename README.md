@@ -60,7 +60,7 @@ tools/
 | # | Jalon | Statut |
 |---|---|---|
 | MS-0 | Fondations (dépôt, CI, BDD, migrations, moteur d'états, traçabilité) | **Validé (tag ms-0)** |
-| MS-1 | Gouvernance (rôles, espaces de travail, lots de règles) | Non démarré |
+| MS-1 | Gouvernance (rôles, espaces de travail, lots de règles) | **Terminé — en revue PO** |
 | MS-2 | Demande et faisabilité | Non démarré |
 | MS-3 | Sources et preuves | Non démarré |
 | MS-4 | Cartographie et contradictions | Non démarré |
@@ -79,7 +79,14 @@ validée, PostgreSQL et migrations, journal chaîné, moteur d'états généré,
 TST-18, tableau de bord de traçabilité, image non root. Voir
 docs/reports/MS-0-rapport.md et docs/reports/MS-0-demo.md.
 
-## Commandes disponibles (après MS-0)
+## État MS-1
+
+La gouvernance est versionnée et validée : quatre JSON Schemas v1, pipeline en
+9 étapes, évaluateur CEL décimal, épinglage, non-rétroactivité, console
+minimale SCR-15/SCR-17 avec l'en-tête FORGE. Voir docs/reports/MS-1-rapport.md
+et docs/reports/MS-1-demo.md.
+
+## Commandes disponibles (après MS-1)
 
 ```bash
 make check                    # Format · types · dépendances · tests · traçabilité
@@ -87,6 +94,9 @@ make test-acceptance          # Tests d'acceptation uniquement (@pytest.mark.ca)
 make spec-trace               # Tableau de bord spec <-> tests (HTML + Markdown)
 make gen-transitions          # Génère le moteur d'états depuis la spec
 make verify-chain             # Vérifie les invariants du journal chaîné
+make demo-governance          # Démonstration gouvernance (sans persistance)
+make demo-ledger              # Démonstration du journal chaîné
+make seed-governance          # Prépare la console locale de gouvernance
 
 # Disponibles immédiatement :
 make spec ID=CA-099           # Affiche un critère d'acceptation

@@ -1,32 +1,40 @@
 {
-  "milestone": "MS-0",
-  "generated_at": "2026-10-23T20:23:50+00:00",
+  "milestone": "MS-1",
+  "generated_at": "2026-10-23T20:50:05+00:00",
   "summary": {
     "ca_total": 195,
-    "ca_green": 0,
+    "ca_green": 4,
     "ca_red": 0,
     "ca_skipped": 0,
     "ca_no_test": 0,
-    "ca_out_of_scope": 195,
-    "ca_percent": 0.0,
-    "in_scope_total": 0,
-    "in_scope_green": 0,
-    "in_scope_percent": 0.0,
-    "tests": 82,
+    "ca_out_of_scope": 191,
+    "ca_percent": 2.1,
+    "in_scope_total": 4,
+    "in_scope_green": 4,
+    "in_scope_percent": 100.0,
+    "tests": 119,
     "orphan_tests": 0,
     "unknown_ids": 0,
     "requirements_total": 483,
-    "requirements_covered": 1,
-    "requirements_percent": 0.2,
+    "requirements_covered": 11,
+    "requirements_percent": 2.3,
     "transitions_total": 54,
     "transitions_covered": 54
   },
   "evolution": {
-    "ca_green": 0,
+    "ca_green": 4,
     "ca_total": 195,
-    "ca_percent": 0.0,
-    "previous": null,
-    "delta": null
+    "ca_percent": 2.1,
+    "previous": {
+      "milestone": "MS-0",
+      "ca_green": 0,
+      "ca_total": 195,
+      "ca_percent": 0.0,
+      "requirements_covered": 11,
+      "transitions_covered": 54,
+      "recorded_at": "2026-10-23T20:42:31+00:00"
+    },
+    "delta": 2.1
   },
   "criteria": {
     "CA-001": {
@@ -626,20 +634,28 @@
       "tests": []
     },
     "CA-150": {
-      "status": "out-of-scope",
-      "tests": []
+      "status": "green",
+      "tests": [
+        "backend/tests/acceptance/test_governance_ca.py::test_ca150_only_responsible_changes_registry_and_pins_stay_on_old_version"
+      ]
     },
     "CA-151": {
-      "status": "out-of-scope",
-      "tests": []
+      "status": "green",
+      "tests": [
+        "backend/tests/acceptance/test_governance_ca.py::test_ca151_source_exposes_four_authorization_levels"
+      ]
     },
     "CA-152": {
-      "status": "out-of-scope",
-      "tests": []
+      "status": "green",
+      "tests": [
+        "backend/tests/acceptance/test_governance_ca.py::test_ca152_rule_and_template_changes_require_responsible_and_leave_pins"
+      ]
     },
     "CA-153": {
-      "status": "out-of-scope",
-      "tests": []
+      "status": "green",
+      "tests": [
+        "backend/tests/acceptance/test_governance_ca.py::test_ca153_rule_prevails_over_contradicting_example"
+      ]
     },
     "CA-154": {
       "status": "out-of-scope",
@@ -1292,8 +1308,10 @@
       "justification": null
     },
     "RB-097": {
-      "covered": false,
-      "tests": [],
+      "covered": true,
+      "tests": [
+        "backend/tests/unit/test_governance_rules.py::test_only_responsible_can_write"
+      ],
       "justification": null
     },
     "RB-098": {
@@ -1327,8 +1345,10 @@
       "justification": null
     },
     "RB-104": {
-      "covered": false,
-      "tests": [],
+      "covered": true,
+      "tests": [
+        "backend/tests/unit/test_governance_rules.py::test_effective_date_must_be_future"
+      ],
       "justification": null
     },
     "RB-105": {
@@ -2697,18 +2717,24 @@
       "justification": null
     },
     "RF-250": {
-      "covered": false,
-      "tests": [],
+      "covered": true,
+      "tests": [
+        "backend/tests/acceptance/test_governance_ca.py::test_ca150_only_responsible_changes_registry_and_pins_stay_on_old_version"
+      ],
       "justification": null
     },
     "RF-251": {
-      "covered": false,
-      "tests": [],
+      "covered": true,
+      "tests": [
+        "backend/tests/acceptance/test_governance_ca.py::test_ca151_source_exposes_four_authorization_levels"
+      ],
       "justification": null
     },
     "RF-252": {
-      "covered": false,
-      "tests": [],
+      "covered": true,
+      "tests": [
+        "backend/tests/acceptance/test_governance_ca.py::test_ca150_only_responsible_changes_registry_and_pins_stay_on_old_version"
+      ],
       "justification": null
     },
     "RF-253": {
@@ -2717,18 +2743,25 @@
       "justification": null
     },
     "RF-254": {
-      "covered": false,
-      "tests": [],
+      "covered": true,
+      "tests": [
+        "backend/tests/acceptance/test_governance_ca.py::test_ca152_rule_and_template_changes_require_responsible_and_leave_pins"
+      ],
       "justification": null
     },
     "RF-255": {
-      "covered": false,
-      "tests": [],
+      "covered": true,
+      "tests": [
+        "backend/tests/acceptance/test_governance_ca.py::test_ca153_rule_prevails_over_contradicting_example"
+      ],
       "justification": null
     },
     "RF-256": {
-      "covered": false,
-      "tests": [],
+      "covered": true,
+      "tests": [
+        "backend/tests/acceptance/test_governance_ca.py::test_ca153_rule_prevails_over_contradicting_example",
+        "backend/tests/unit/test_governance_validation.py::test_contradicting_example_becomes_an_observation_not_a_failure"
+      ],
       "justification": null
     },
     "RF-257": {
@@ -2737,13 +2770,17 @@
       "justification": null
     },
     "RF-258": {
-      "covered": false,
-      "tests": [],
+      "covered": true,
+      "tests": [
+        "backend/tests/acceptance/test_governance_ca.py::test_ca152_rule_and_template_changes_require_responsible_and_leave_pins"
+      ],
       "justification": null
     },
     "RF-259": {
-      "covered": false,
-      "tests": [],
+      "covered": true,
+      "tests": [
+        "backend/tests/acceptance/test_governance_ca.py::test_ca152_rule_and_template_changes_require_responsible_and_leave_pins"
+      ],
       "justification": null
     },
     "RF-260": {

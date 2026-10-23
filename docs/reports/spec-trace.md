@@ -1,29 +1,34 @@
 # Tableau de bord specification <-> tests
 
-**Jalon :** MS-0  
-**Genere :** 2026-10-23T20:23:50+00:00
+**Jalon :** MS-1  
+**Genere :** 2026-10-23T20:50:05+00:00
 
 ## Synthese
 
 | Indicateur | Valeur |
 |---|---|
-| Criteres exigibles verts | 0 / 0 (0.0 %) |
+| Criteres exigibles verts | 4 / 4 (100.0 %) |
 | Criteres exigibles rouges | 0 |
 | Criteres exigibles sans test | 0 |
 | Criteres exigibles ignores | 0 |
-| Criteres hors perimetre (jalons futurs) | 195 |
-| Criteres verts (tous jalons) | 0 / 195 (0.0 %) |
-| Exigences RF/RB/RT couvertes | 1 / 483 (0.2 %) |
+| Criteres hors perimetre (jalons futurs) | 191 |
+| Criteres verts (tous jalons) | 4 / 195 (2.1 %) |
+| Exigences RF/RB/RT couvertes | 11 / 483 (2.3 %) |
 | Transitions couvertes | 54 / 54 |
-| Tests | 82 |
+| Tests | 119 |
 | Tests orphelins | 0 |
 | Identifiants inconnus | 0 |
 
-**Evolution :** premier jalon mesure, aucune comparaison anterieure.
+**Evolution :** +2.1 point(s) par rapport a MS-0 (0.0 %).
 
 ## Criteres du jalon
 
-Aucun critere d'acceptation exigible a ce jalon (les CA appartiennent aux jalons metier).
+| Critere | Statut | Tests |
+|---|---|---|
+| CA-150 | vert | 1 |
+| CA-151 | vert | 1 |
+| CA-152 | vert | 1 |
+| CA-153 | vert | 1 |
 
 ## Criteres exigibles sans test
 
@@ -31,7 +36,7 @@ Aucun.
 
 ## Exigences sans test
 
-482 exigence(s) RF/RB/RT sans test ni justification. La porte ET-355 est active au jalon final.
+472 exigence(s) RF/RB/RT sans test ni justification. La porte ET-355 est active au jalon final.
 
 ## Transitions non couvertes
 

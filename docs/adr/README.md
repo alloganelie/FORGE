@@ -16,3 +16,4 @@ exige un ADR avant d'être introduite.
 | ADR-007 | Image unique, deux rôles, SBOM | Proposé |
 | ADR-008 | Outillage de test et hypothèses de propriété | Proposé |
 | ADR-009 | Configuration et environnements | Proposé |
+| ADR-010 | Schémas JSON et évaluateur CEL encapsulé | Proposé |

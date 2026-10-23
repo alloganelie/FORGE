@@ -72,6 +72,10 @@ def dependency_check() -> None:
     _run([_venv_python(), "tools/check_imports.py"])
 
 
+def decimal_check() -> None:
+    _run([_venv_python(), "tools/check_decimal.py"])
+
+
 def generated_check() -> None:
     _run([_venv_python(), "tools/gen_enums.py", "--check"])
     _run([_venv_python(), "tools/gen_transitions.py", "--check"])
@@ -106,7 +110,7 @@ def integration_tests() -> None:
 
 
 def acceptance_tests() -> None:
-    pytest("backend/tests/acceptance", "-m", "not integration")
+    pytest("backend/tests/acceptance")
 
 
 def ensure_database() -> None:
@@ -146,6 +150,7 @@ def check() -> None:
     format_check()
     type_check()
     dependency_check()
+    decimal_check()
     generated_check()
     all_tests()
     traceability()
@@ -170,6 +175,8 @@ def main(argv: list[str] | None = None) -> int:
             "gen-enums",
             "verify-chain",
             "demo-ledger",
+            "demo-governance",
+            "seed-governance",
             "db-up",
             "db-down",
         ],
@@ -186,6 +193,7 @@ def main(argv: list[str] | None = None) -> int:
         tests()
     elif args.target == "test-acceptance":
         sync()
+        ensure_database()
         acceptance_tests()
     elif args.target == "tst18":
         sync()
@@ -209,6 +217,12 @@ def main(argv: list[str] | None = None) -> int:
     elif args.target == "demo-ledger":
         sync()
         _run([_venv_python(), "tools/demo_ledger.py"])
+    elif args.target == "demo-governance":
+        sync()
+        _run([_venv_python(), "tools/demo_governance.py"])
+    elif args.target == "seed-governance":
+        sync()
+        _run([_venv_python(), "tools/seed_governance_demo.py"])
     elif args.target == "db-up":
         _run(["docker", "compose", "-f", "ops/compose.yaml", "up", "-d", "--wait", "db"])
     elif args.target == "db-down":
