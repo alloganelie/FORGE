@@ -104,7 +104,7 @@ Après un « validé » : `git commit`, puis `git tag ms-n`, puis passez au jalo
 
 | Date | Jalon | PO-01 | PO-02 | PO-03 | PO-04 | PO-05 | PO-06 | PO-07 | PO-08 | PO-09 | PO-10 | Verdict | Tag git | Commentaires |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| | | | | | | | | | | | | | | |
+| 2026-10-23 | MS-0 | ✔ | ✔ | — | — | — | — | — | — | — | ✔ | Validé avec réserve | ms-0 | Réserve E-01 (CI GitHub sur remote). Q-002 corrigée (82 tests verts). |
 
 Légende : ✔ bon · ✖ mauvais · — non applicable.
 
