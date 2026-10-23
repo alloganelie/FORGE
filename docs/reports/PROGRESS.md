@@ -1,6 +1,6 @@
 # PROGRESS — état d'avancement (mis à jour par l'agent après chaque tranche)
 
-**Jalon courant :** MS-3 — Sources et preuves (prêt à démarrer)
+**Jalon courant :** MS-2 — Demande et faisabilité (validé, tag ms-2) ; prochain jalon à réaliser : MS-3
 **Dernière tranche terminée :** MS-2 validé par le PO (tag ms-2)
 **Prochaine tranche :** MS-3, section 3 (voir `docs/milestones/MS-3.md`).
 
