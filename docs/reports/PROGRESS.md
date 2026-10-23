@@ -1,8 +1,8 @@
 # PROGRESS — état d'avancement (mis à jour par l'agent après chaque tranche)
 
-**Jalon courant :** MS-1 — Gouvernance (terminé, en revue Product Owner)
-**Dernière tranche terminée :** T15 — rapport et guide de démonstration MS-1
-**Prochaine tranche :** aucune ; **ne pas commencer MS-2** avant la revue PO.
+**Jalon courant :** MS-2 — Demande et faisabilité (prêt à démarrer)
+**Dernière tranche terminée :** MS-1 validé par le PO (tag ms-1)
+**Prochaine tranche :** MS-2, section 3 (voir `docs/milestones/MS-2.md`).
 
 ## Fait — MS-0 (fondations)
 
@@ -31,13 +31,13 @@
 - Q-002 : reprise depuis `suspended_from` du journal (corrigée MS-0).
 - Q-003 : portes de traçabilité au périmètre cumulé.
 - ADR-010 : `jsonschema` pour les schémas, évaluateur CEL restreint et décimal.
-- E-01 : aucun remote Git configuré dans cet environnement ; la CI n'a donc pas pu être déclenchée sur GitHub. Le workflow et l'exécution locale équivalente sont verts.
+- E-01 : levée (remote https://github.com/alloganelie/FORGE.git configuré, code et tags poussés, CI GitHub Actions active).
 
 ## Questions en attente pour le Product Owner
 
-- Aucune question bloquante.
-- Points à arbitrer dans le rapport : ET-057/059/060/063/064/066 partiels, et console de démonstration sans OIDC (rôle lu en base mais acteur choisi dans l'interface).
+- Aucune question bloquante (Q-001, Q-002, Q-003 tranchées).
+- Points documentés du rapport MS-1 : ET-057/059/060/063/064/066 partiels et console sans OIDC (à compléter dans les jalons ultérieurs comme prévu).
 
 ## Prochaine commande à lancer
 
-`make check` — puis suivre `docs/reports/MS-1-demo.md`.
+`make check` — puis démarrer MS-2 (voir `docs/milestones/MS-2.md`).
