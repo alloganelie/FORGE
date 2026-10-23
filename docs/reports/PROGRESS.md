@@ -1,8 +1,8 @@
 # PROGRESS — état d'avancement (mis à jour par l'agent après chaque tranche)
 
-**Jalon courant :** MS-0 — Fondations (terminé, en revue Product Owner)
+**Jalon courant :** MS-1 — Gouvernance (prêt à démarrer)
 **Dernière tranche terminée :** T10 — correction Q-002 (reprise depuis le journal)
-**Prochaine tranche :** aucune ; **ne pas commencer MS-1** avant la revue PO.
+**Prochaine tranche :** MS-1, section 3 (voir docs/milestones/MS-1.md).
 
 ## Fait (par tranche)
 
