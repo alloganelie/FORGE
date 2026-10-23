@@ -1,0 +1,57 @@
+# Genere par tools/gen_transitions.py depuis F 8 et T 7.2.
+# NE PAS MODIFIER A LA MAIN. Regenerer : python tools/gen_transitions.py
+axis: V
+entity: deliverable_version
+spec_section: '8.6'
+generated_from:
+  functional_sha256: c8e90e38cb72c484a778b7a5793d84c83919c9b5ff845be05d974a1e7577fd10
+  technical_sha256: 31da88ff5d6acdd67503f7edd937be3407a42b3bfca58e23932714e712338a82
+states:
+- id: ST-V-01
+  label: Provisoire
+  value: provisional
+- id: ST-V-02
+  label: Finalisée
+  value: finalized
+- id: ST-V-03
+  label: Remplacée
+  value: superseded
+- id: ST-V-04
+  label: Abandonnée
+  value: abandoned
+final_states:
+- superseded
+- abandoned
+transitions:
+- id: TR-V-01
+  from: provisional
+  to: finalized
+  actor:
+  - agent
+  - system
+  guards:
+  - all_mandatory_controls_passed
+  - version_conforming
+  - mandatory_elements_ok
+  - reports_produced
+  condition: 'Finalisation de la demande (TR-R-18) : tous les contrôles obligatoires réussis, rapports produits'
+  effects: []
+- id: TR-V-02
+  from: finalized
+  to: superseded
+  actor:
+  - agent
+  - system
+  guards: []
+  condition: Une version ultérieure du même livrable est finalisée
+  effects: []
+- id: TR-V-03
+  from: provisional
+  to: abandoned
+  actor:
+  - agent
+  - system
+  guards: []
+  condition: Annulation définitive de la demande (TR-R-21)
+  effects: []
+non_transitions: []

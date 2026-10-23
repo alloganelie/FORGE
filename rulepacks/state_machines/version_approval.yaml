@@ -1,0 +1,66 @@
+# Genere par tools/gen_transitions.py depuis F 8 et T 7.2.
+# NE PAS MODIFIER A LA MAIN. Regenerer : python tools/gen_transitions.py
+axis: A
+entity: deliverable_version
+spec_section: '8.4'
+generated_from:
+  functional_sha256: c8e90e38cb72c484a778b7a5793d84c83919c9b5ff845be05d974a1e7577fd10
+  technical_sha256: 31da88ff5d6acdd67503f7edd937be3407a42b3bfca58e23932714e712338a82
+states:
+- id: ST-A-01
+  label: Non soumise
+  value: not_submitted
+- id: ST-A-02
+  label: Non requise
+  value: not_required
+- id: ST-A-03
+  label: En attente d'approbation
+  value: pending
+- id: ST-A-04
+  label: Approuvée
+  value: approved
+- id: ST-A-05
+  label: Refusée
+  value: refused
+final_states:
+- approved
+- refused
+transitions:
+- id: TR-A-01
+  from: not_submitted
+  to: pending
+  actor:
+  - responsible
+  guards:
+  - version_finalized
+  condition: Version **finalisée** (donc conforme), approbation exigée par les règles du type, soumission à l'approbateur
+    (la personne responsable au MVP)
+  effects: []
+- id: TR-A-02
+  from: not_submitted
+  to: not_required
+  actor:
+  - responsible
+  guards:
+  - version_finalized
+  condition: À la finalisation, les règles du type n'exigent pas d'approbation
+  effects: []
+- id: TR-A-03
+  from: pending
+  to: approved
+  actor:
+  - responsible
+  guards:
+  - approver_authorized
+  condition: Décision de l'approbateur habilité
+  effects: []
+- id: TR-A-04
+  from: pending
+  to: refused
+  actor:
+  - responsible
+  guards:
+  - approver_authorized
+  condition: Décision motivée
+  effects: []
+non_transitions: []

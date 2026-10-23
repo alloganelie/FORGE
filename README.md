@@ -59,7 +59,7 @@ tools/
 
 | # | Jalon | Statut |
 |---|---|---|
-| MS-0 | Fondations (dépôt, CI, BDD, migrations, moteur d'états, traçabilité) | Non démarré |
+| MS-0 | Fondations (dépôt, CI, BDD, migrations, moteur d'états, traçabilité) | **Terminé — en revue PO** |
 | MS-1 | Gouvernance (rôles, espaces de travail, lots de règles) | Non démarré |
 | MS-2 | Demande et faisabilité | Non démarré |
 | MS-3 | Sources et preuves | Non démarré |
@@ -71,6 +71,13 @@ tools/
 | MS-9 | Clôture | Non démarré |
 
 ---
+
+## État MS-0
+
+Les fondations sont en place : 23 modules et leurs frontières, configuration
+validée, PostgreSQL et migrations, journal chaîné, moteur d'états généré,
+TST-18, tableau de bord de traçabilité, image non root. Voir
+docs/reports/MS-0-rapport.md et docs/reports/MS-0-demo.md.
 
 ## Commandes disponibles (après MS-0)
 

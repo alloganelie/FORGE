@@ -1,0 +1,12 @@
+{
+  "milestones": {
+    "MS-0": {
+      "ca_green": 0,
+      "ca_total": 195,
+      "ca_percent": 0.0,
+      "requirements_covered": 1,
+      "transitions_covered": 54,
+      "recorded_at": "2026-10-23T17:19:12+00:00"
+    }
+  }
+}

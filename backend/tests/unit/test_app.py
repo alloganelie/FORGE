@@ -2,12 +2,14 @@
 
 from __future__ import annotations
 
+import pytest
 from fastapi.testclient import TestClient
 
 from agent.interfaces.rest.app import FORGE_TITLE, create_app
 from agent.platform.config import Settings
 
 
+@pytest.mark.spec("ET-002")
 def test_health_endpoint() -> None:
     client = TestClient(create_app(Settings()))
     response = client.get("/healthz")
@@ -15,6 +17,7 @@ def test_health_endpoint() -> None:
     assert response.json()["status"] == "ok"
 
 
+@pytest.mark.spec("ET-002")
 def test_landing_displays_forge() -> None:
     client = TestClient(create_app(Settings()))
     response = client.get("/")
@@ -23,6 +26,7 @@ def test_landing_displays_forge() -> None:
     assert "Framework for Orchestrated Report Generation and Evaluation" in response.text
 
 
+@pytest.mark.spec("ET-002")
 def test_openapi_contract_is_exposed() -> None:
     app = create_app(Settings())
     schema = app.openapi()

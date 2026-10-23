@@ -152,7 +152,9 @@ def scan_source(source: str, relpath: str) -> list[Violation]:
                         f"acces direct a {module!r} : utiliser {target}.api ou {target}.events",
                     )
                 )
-            if current != "ledger" and target == "ledger":
+            if current != "ledger" and (
+                module.startswith("agent.ledger.core") or module.startswith("agent.ledger.infra")
+            ):
                 violations.append(Violation("DR-04", relpath, line, "seul ledger ecrit le journal"))
         if is_interface and module.startswith("agent."):
             target = module.split(".")[1] if len(module.split(".")) > 1 else ""

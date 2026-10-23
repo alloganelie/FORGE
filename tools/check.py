@@ -97,12 +97,34 @@ def tests() -> None:
     pytest("-m", "not integration")
 
 
+def all_tests() -> None:
+    pytest()
+
+
 def integration_tests() -> None:
     pytest("-m", "integration")
 
 
 def acceptance_tests() -> None:
     pytest("backend/tests/acceptance", "-m", "not integration")
+
+
+def ensure_database() -> None:
+    """Demarre PostgreSQL local si la base de test n'est pas joignable."""
+    url = os.environ.get(
+        "AGENT_TEST_DATABASE_URL",
+        "postgresql+psycopg://agent:agent@localhost:55432/agent_test",
+    ).replace("+psycopg", "")
+    probe = (
+        "import os, psycopg; "
+        "psycopg.connect(os.environ['CHECK_DB_URL'], connect_timeout=3); "
+        "print('PostgreSQL joignable')"
+    )
+    env_probe = dict(os.environ, CHECK_DB_URL=url)
+    completed = subprocess.run([_venv_python(), "-c", probe], cwd=ROOT, env=env_probe, check=False)
+    if completed.returncode != 0:
+        print("PostgreSQL local indisponible : demarrage du conteneur...")
+        _run(["docker", "compose", "-f", "ops/compose.yaml", "up", "-d", "--wait", "db"])
 
 
 def traceability() -> None:
@@ -120,10 +142,13 @@ def traceability() -> None:
 
 def check() -> None:
     sync()
+    ensure_database()
     format_check()
     type_check()
     dependency_check()
-    tests()
+    generated_check()
+    all_tests()
+    traceability()
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -138,11 +163,13 @@ def main(argv: list[str] | None = None) -> int:
             "fmt",
             "test",
             "test-acceptance",
+            "tst18",
             "integration",
             "spec-trace",
             "gen-transitions",
             "gen-enums",
             "verify-chain",
+            "demo-ledger",
             "db-up",
             "db-down",
         ],
@@ -160,11 +187,15 @@ def main(argv: list[str] | None = None) -> int:
     elif args.target == "test-acceptance":
         sync()
         acceptance_tests()
+    elif args.target == "tst18":
+        sync()
+        pytest("backend/tests/property/test_tst18.py")
     elif args.target == "integration":
         sync()
         integration_tests()
     elif args.target == "spec-trace":
         sync()
+        all_tests()
         traceability()
     elif args.target == "gen-transitions":
         sync()
@@ -175,6 +206,9 @@ def main(argv: list[str] | None = None) -> int:
     elif args.target == "verify-chain":
         sync()
         _run([_venv_python(), "tools/verify_chain.py"])
+    elif args.target == "demo-ledger":
+        sync()
+        _run([_venv_python(), "tools/demo_ledger.py"])
     elif args.target == "db-up":
         _run(["docker", "compose", "-f", "ops/compose.yaml", "up", "-d", "--wait", "db"])
     elif args.target == "db-down":

@@ -1,0 +1,337 @@
+# Genere par tools/gen_transitions.py depuis F 8 et T 7.2.
+# NE PAS MODIFIER A LA MAIN. Regenerer : python tools/gen_transitions.py
+axis: R
+entity: request
+spec_section: '8.2'
+generated_from:
+  functional_sha256: c8e90e38cb72c484a778b7a5793d84c83919c9b5ff845be05d974a1e7577fd10
+  technical_sha256: 31da88ff5d6acdd67503f7edd937be3407a42b3bfca58e23932714e712338a82
+states:
+- id: ST-R-01
+  label: Reçue
+  value: received
+- id: ST-R-02
+  label: En clarification
+  value: clarifying
+- id: ST-R-03
+  label: En vérification de faisabilité
+  value: feasibility
+- id: ST-R-04
+  label: En production
+  value: producing
+- id: ST-R-05
+  label: En contrôle qualité
+  value: quality_control
+- id: ST-R-06
+  label: Bloquée
+  value: blocked
+- id: ST-R-07
+  label: En attente d'une décision humaine
+  value: awaiting_decision
+- id: ST-R-08
+  label: Suspendue
+  value: suspended
+- id: ST-R-09
+  label: Finalisée
+  value: finalized
+- id: ST-R-10
+  label: Annulée définitivement
+  value: cancelled
+final_states:
+- finalized
+- cancelled
+transitions:
+- id: TR-R-01
+  from: null
+  to: received
+  actor:
+  - user
+  - responsible
+  guards:
+  - author_authorized
+  condition: Soumission d'une demande par un utilisateur autorisé
+  effects:
+  - emit: RequestReceived
+  - job: understand_request
+- id: TR-R-02
+  from: received
+  to: clarifying
+  actor:
+  - agent
+  guards:
+  - ambiguity_significant
+  condition: Ambiguïté significative non déterminable
+  effects:
+  - emit: ClarificationRequested
+- id: TR-R-03
+  from: received
+  to: feasibility
+  actor:
+  - agent
+  guards:
+  - parameters_sufficient
+  condition: Paramètres suffisants
+  effects:
+  - job: assess_feasibility
+- id: TR-R-04
+  from: clarifying
+  to: feasibility
+  actor:
+  - agent
+  guards:
+  - answers_sufficient
+  condition: Réponses suffisantes
+  effects:
+  - job: assess_feasibility
+- id: TR-R-05
+  from: feasibility
+  to: producing
+  actor:
+  - agent
+  guards:
+  - feasible_at_least_in_part
+  condition: Faisable au moins en partie
+  effects:
+  - emit: GovernancePinned
+  - job: mobilize_information
+- id: TR-R-06
+  from: feasibility
+  to: blocked
+  actor:
+  - agent
+  guards:
+  - no_part_feasible
+  condition: Aucune partie réalisable
+  effects:
+  - set: waiting_origin=feasibility
+- id: TR-R-07
+  from: feasibility
+  to: awaiting_decision
+  actor:
+  - agent
+  guards:
+  - decision_uncovered_or_rights_uncertain
+  condition: Décision non couverte ou droits incertains
+  effects:
+  - set: waiting_origin=feasibility
+  - emit: DecisionRequested
+- id: TR-R-08
+  from: feasibility
+  to: clarifying
+  actor:
+  - agent
+  guards:
+  - new_ambiguity
+  condition: Nouvelle ambiguïté révélée
+  effects:
+  - emit: ClarificationRequested
+- id: TR-R-09
+  from: producing
+  to: quality_control
+  actor:
+  - agent
+  guards:
+  - all_required_elements_produced
+  condition: Tous les éléments requis sont produits
+  effects:
+  - job: run_controls
+- id: TR-R-10
+  from: producing
+  to: blocked
+  actor:
+  - agent
+  guards:
+  - no_operation_can_progress
+  condition: Plus aucune opération ne peut avancer
+  effects:
+  - set: waiting_origin=producing
+- id: TR-R-11
+  from: producing
+  to: awaiting_decision
+  actor:
+  - agent
+  guards:
+  - only_human_decision_progresses
+  condition: Seule une décision humaine fait avancer
+  effects:
+  - set: waiting_origin=producing
+  - emit: DecisionRequested
+- id: TR-R-12
+  from: producing
+  to: clarifying
+  actor:
+  - agent
+  guards:
+  - only_user_answer_progresses
+  condition: Seule une réponse de l'utilisateur fait avancer
+  effects:
+  - emit: ClarificationRequested
+- id: TR-R-13
+  from: blocked
+  to: producing
+  actor:
+  - agent
+  guards:
+  - cause_lifted
+  - origin_is_producing
+  condition: Cause levée
+  effects:
+  - clear: waiting_origin
+  - job: resume_production
+- id: TR-R-14
+  from: awaiting_decision
+  to: producing
+  actor:
+  - responsible
+  - agent
+  guards:
+  - decision_recorded
+  - origin_is_producing
+  condition: Décision enregistrée, lorsque la demande était entrée en attente depuis En production
+  effects:
+  - clear: waiting_origin
+  - job: resume_production
+- id: TR-R-15
+  from: clarifying
+  to: producing
+  actor:
+  - agent
+  guards:
+  - answer_sufficient
+  - feasibility_acquired
+  condition: Réponse suffisante (si la faisabilité est déjà acquise)
+  effects:
+  - job: resume_production
+- id: TR-R-16
+  from: quality_control
+  to: producing
+  actor:
+  - agent
+  guards:
+  - failure_requires_production
+  condition: Échec nécessitant un complément de production
+  effects:
+  - job: resume_production
+- id: TR-R-17
+  from: quality_control
+  to: awaiting_decision
+  actor:
+  - agent
+  guards:
+  - correction_requires_decision
+  condition: Correction exigeant une décision
+  effects:
+  - set: waiting_origin=quality_control
+  - emit: DecisionRequested
+- id: TR-R-18
+  from: quality_control
+  to: finalized
+  actor:
+  - agent
+  guards:
+  - all_mandatory_controls_passed
+  - version_conforming
+  - mandatory_elements_ok
+  - reports_produced
+  condition: Tous les contrôles obligatoires réussis ; rapports produits
+  effects:
+  - emit: VersionFinalized
+  - job: seal_version
+- id: TR-R-19
+  from: ANY_NON_FINAL_EXCEPT_SUSPENDED
+  to: suspended
+  actor:
+  - user
+  - responsible
+  guards: []
+  condition: Interruption à l'initiative de l'utilisateur ou suspension ordonnée
+  effects:
+  - set: suspended_from=current
+  - job: snapshot_work_state
+  - emit: RequestSuspended
+- id: TR-R-20
+  from: suspended
+  to: DYNAMIC
+  actor:
+  - user
+  - responsible
+  guards:
+  - retention_allows_resume
+  condition: Reprise ; revalidation effectuée
+  effects:
+  - target: resume_target()
+  - job: revalidate_request
+- id: TR-R-21
+  from: ANY_NON_FINAL
+  to: cancelled
+  actor:
+  - author
+  - responsible
+  guards:
+  - explicit_confirmation
+  - not_finalized
+  condition: Action explicite **et** confirmation explicite ; impossible sur une demande Finalisée
+  effects:
+  - emit: RequestCancelled
+  - job: abandon_provisional_versions
+- id: TR-R-23
+  from: awaiting_decision
+  to: feasibility
+  actor:
+  - responsible
+  - agent
+  guards:
+  - decision_recorded
+  - origin_is_feasibility
+  condition: Décision enregistrée, lorsque l'attente est née pendant la vérification de faisabilité
+  effects:
+  - clear: waiting_origin
+  - job: assess_feasibility
+- id: TR-R-24
+  from: awaiting_decision
+  to: quality_control
+  actor:
+  - responsible
+  - agent
+  guards:
+  - decision_recorded
+  - origin_is_quality_control
+  condition: Décision enregistrée, lorsque l'attente est née pendant le contrôle qualité
+  effects:
+  - clear: waiting_origin
+  - job: run_controls
+- id: TR-R-25
+  from: awaiting_decision
+  to: blocked
+  actor:
+  - agent
+  guards:
+  - decision_insufficient
+  - no_operation_can_progress
+  condition: La décision ne lève pas la cause du blocage et plus aucune opération ne peut avancer
+  effects: []
+- id: TR-R-26
+  from: blocked
+  to: feasibility
+  actor:
+  - agent
+  guards:
+  - cause_lifted
+  - origin_is_feasibility
+  condition: Cause levée, lorsque le blocage est né pendant la vérification de faisabilité
+  effects:
+  - clear: waiting_origin
+  - job: assess_feasibility
+- id: TR-R-27
+  from: blocked
+  to: awaiting_decision
+  actor:
+  - agent
+  guards:
+  - lift_requires_decision
+  condition: La levée de la cause exige une décision
+  effects:
+  - emit: DecisionRequested
+non_transitions:
+- id: TR-R-22
+  reason: 'Revision : cree une nouvelle demande liee via TR-R-01 ; aucun etat ne change'

@@ -1,0 +1,5 @@
+# Justifications de non-testabilite (ET-355).
+# Chaque RF, RB ou RT non couvert par un test doit figurer ici pour le jalon final.
+# Aucune justification n'est encore necessaire : les exigences non couvertes
+# appartiennent aux jalons metier suivants et la porte ET-355 est active au jalon final.
+justifications: {}

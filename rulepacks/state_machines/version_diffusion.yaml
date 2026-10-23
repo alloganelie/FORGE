@@ -1,0 +1,65 @@
+# Genere par tools/gen_transitions.py depuis F 8 et T 7.2.
+# NE PAS MODIFIER A LA MAIN. Regenerer : python tools/gen_transitions.py
+axis: D
+entity: deliverable_version
+spec_section: '8.5'
+generated_from:
+  functional_sha256: c8e90e38cb72c484a778b7a5793d84c83919c9b5ff845be05d974a1e7577fd10
+  technical_sha256: 31da88ff5d6acdd67503f7edd937be3407a42b3bfca58e23932714e712338a82
+states:
+- id: ST-D-01
+  label: Diffusion non autorisée
+  value: not_authorized
+- id: ST-D-02
+  label: Diffusion autorisée
+  value: authorized
+- id: ST-D-03
+  label: Autorisation révoquée
+  value: revoked
+final_states: []
+transitions:
+- id: TR-D-01
+  from: not_authorized
+  to: authorized
+  actor:
+  - responsible
+  guards:
+  - version_finalized
+  - approval_approved_or_not_required
+  - diffusion_rights_verified_per_recipient
+  condition: 'Décision de la personne responsable. Prérequis : version **finalisée**, approbation « Approuvée » ou « Non requise
+    », droits de diffusion vérifiés pour chaque destinataire'
+  effects:
+  - emit: DiffusionAuthorized
+- id: TR-D-02
+  from: authorized
+  to: revoked
+  actor:
+  - responsible
+  guards: []
+  condition: Décision de la personne responsable
+  effects:
+  - emit: DiffusionRevoked
+- id: TR-D-03
+  from: revoked
+  to: authorized
+  actor:
+  - responsible
+  guards:
+  - version_finalized
+  - approval_approved_or_not_required
+  - diffusion_rights_verified_per_recipient
+  condition: Nouvelle décision explicite, mêmes prérequis
+  effects:
+  - emit: DiffusionAuthorized
+- id: TR-D-04
+  from: authorized
+  to: authorized
+  actor:
+  - responsible
+  guards:
+  - scope_changed
+  condition: Nouvelle décision de la personne responsable modifiant destinataires, périmètre ou éléments exclus ; tracée
+  effects:
+  - emit: DiffusionAuthorized
+non_transitions: []

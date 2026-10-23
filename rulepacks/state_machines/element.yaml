@@ -1,0 +1,121 @@
+# Genere par tools/gen_transitions.py depuis F 8 et T 7.2.
+# NE PAS MODIFIER A LA MAIN. Regenerer : python tools/gen_transitions.py
+axis: E
+entity: element
+spec_section: '8.7'
+generated_from:
+  functional_sha256: c8e90e38cb72c484a778b7a5793d84c83919c9b5ff845be05d974a1e7577fd10
+  technical_sha256: 31da88ff5d6acdd67503f7edd937be3407a42b3bfca58e23932714e712338a82
+states:
+- id: ST-E-01
+  label: À produire
+  value: to_produce
+- id: ST-E-02
+  label: Produit (provisoire)
+  value: produced
+- id: ST-E-03
+  label: Bloqué
+  value: blocked
+- id: ST-E-04
+  label: En attente de clarification ou de décision
+  value: awaiting
+- id: ST-E-05
+  label: Contrôlé conforme
+  value: controlled_ok
+- id: ST-E-06
+  label: Non conforme
+  value: non_conforming
+- id: ST-E-07
+  label: Non applicable
+  value: not_applicable
+final_states: []
+transitions:
+- id: TR-E-01
+  from: to_produce
+  to: produced
+  actor:
+  - agent
+  guards: []
+  condition: Conditions de production satisfaites ; élément produit
+  effects: []
+- id: TR-E-02
+  from: to_produce
+  to: blocked
+  actor:
+  - agent
+  guards: []
+  condition: Cause de blocage (Annexe C)
+  effects: []
+- id: TR-E-03
+  from: to_produce
+  to: awaiting
+  actor:
+  - agent
+  guards: []
+  condition: Ambiguïté ou décision requise
+  effects: []
+- id: TR-E-04
+  from: to_produce
+  to: not_applicable
+  actor:
+  - agent
+  guards: []
+  condition: Une règle écarte l'exigence pour cette demande
+  effects: []
+- id: TR-E-05
+  from: blocked
+  to: to_produce
+  actor:
+  - agent
+  guards: []
+  condition: Cause levée
+  effects: []
+- id: TR-E-06
+  from: awaiting
+  to: to_produce
+  actor:
+  - agent
+  guards: []
+  condition: Réponse ou décision reçue
+  effects: []
+- id: TR-E-07
+  from: produced
+  to: controlled_ok
+  actor:
+  - agent
+  guards: []
+  condition: Contrôles applicables réussis
+  effects: []
+- id: TR-E-08
+  from: produced
+  to: non_conforming
+  actor:
+  - agent
+  guards: []
+  condition: Contrôle obligatoire échoué
+  effects: []
+- id: TR-E-09
+  from: non_conforming
+  to: produced
+  actor:
+  - agent
+  guards: []
+  condition: Correction autorisée ou complément de production ; contrôles à rejouer
+  effects: []
+- id: TR-E-10
+  from: controlled_ok
+  to: produced
+  actor:
+  - agent
+  guards: []
+  condition: L'élément ou ses entrées sont modifiés (correction, reprise) ; recontrôle nécessaire
+  effects: []
+- id: TR-E-11
+  from: produced
+  to: blocked
+  actor:
+  - agent
+  guards: []
+  condition: Une cause de blocage apparaît après la production (par exemple une source invalidée à la reprise)
+  effects: []
+non_transitions: []

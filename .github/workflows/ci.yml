@@ -1,0 +1,69 @@
+name: integration
+
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  quality:
+    name: Qualite et tests (PostgreSQL reel)
+    runs-on: ubuntu-latest
+    services:
+      db:
+        image: pgvector/pgvector:pg17
+        env:
+          POSTGRES_USER: agent
+          POSTGRES_PASSWORD: agent
+          POSTGRES_DB: agent
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U agent -d agent"
+          --health-interval 3s
+          --health-timeout 3s
+          --health-retries 30
+    env:
+      AGENT_TEST_DATABASE_URL: postgresql+psycopg://agent:agent@localhost:5432/agent_test
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - uses: astral-sh/setup-uv@v6
+        with:
+          version: "0.13.5"
+          enable-cache: true
+      - name: Verrouillage
+        run: uv sync --locked --all-groups
+      - name: make check
+        run: make check
+      - name: Publier le tableau de bord
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: spec-trace
+          path: |
+            docs/reports/spec-trace.html
+            docs/reports/spec-trace.md
+            docs/reports/spec-trace.json
+
+  image:
+    name: Image non root et SBOM
+    runs-on: ubuntu-latest
+    needs: quality
+    steps:
+      - uses: actions/checkout@v4
+      - name: Construire l'image
+        run: docker build -f ops/Dockerfile -t forge-agent:ci .
+      - name: Verifier l'utilisateur non root
+        run: test "$(docker run --rm --entrypoint id forge-agent:ci -u)" = "10001"
+      - name: Produire la SBOM
+        uses: anchore/sbom-action@v0
+        with:
+          image: forge-agent:ci
+          artifact-name: forge-agent.spdx.json
+          output-file: forge-agent.spdx.json

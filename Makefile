@@ -7,8 +7,8 @@ else
 PYTHON ?= python3
 endif
 
-.PHONY: check test test-acceptance spec-trace gen-transitions gen-enums verify-chain \
-        db-up db-down spec toc index briefs brief fmt
+.PHONY: check test test-acceptance tst18 spec-trace gen-transitions gen-enums verify-chain \
+        db-up db-down demo-ledger spec toc index briefs brief fmt
 
 check:  ## format, types, dependances, generation, tests, tracabilite
 	$(PYTHON) tools/check.py check
@@ -18,6 +18,9 @@ test:
 
 test-acceptance:
 	$(PYTHON) tools/check.py test-acceptance
+
+tst18:
+	$(PYTHON) tools/check.py tst18
 
 spec-trace:
 	$(PYTHON) tools/check.py spec-trace
@@ -30,6 +33,9 @@ gen-enums:
 
 verify-chain:
 	$(PYTHON) tools/check.py verify-chain
+
+demo-ledger:
+	$(PYTHON) tools/check.py demo-ledger
 
 db-up:
 	$(PYTHON) tools/check.py db-up
